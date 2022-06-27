@@ -10,12 +10,15 @@ runs:
 
     - name: Update pip
       shell: bash
+      working-directory: ./python
       run: python3 -m pip install --no-cache --upgrade pip
 
     - name: Install package
       shell: bash
+      working-directory: ./python
       run: pip3 install ./dist/*
 
     - name: Install dependencies
       shell: bash
+      working-directory: ./python
       run: pip3 install -r extra_requirements.txt
