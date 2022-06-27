@@ -96,15 +96,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "Parse protobuf version and dowload protoc"
-        run: |
-          apt update && apt install -y wget unzip
-          export PROTO_VERSION=`cat setup.py | grep PROTOBUF_VERSION | grep -Po "((\d+\.)+\d+)"`
-
-          wget -O protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v${PROTO_VERSION}/protoc-${PROTO_VERSION}-linux-x86_64.zip
-          unzip protoc.zip
-          chmod +x ${PWD}/bin/
-          ${PWD}/bin/protoc --version
+      - uses: ./.github/actions/download-protoc
 
       - name: Build package
         run: |
@@ -161,6 +153,8 @@ jobs:
         with:
           name: package
           path: ./dist
+
+      - uses: ./.github/actions/download-protoc
 
       - name: Update pip
         run: python3 -m pip install --no-cache --upgrade pip
