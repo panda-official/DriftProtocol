@@ -72,15 +72,40 @@ jobs:
           path: /home/runner/.conan
           key: conan-cache
 
+  py-install-protoc:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: "Parse protobuf version and dowload protoc"
+        run: |
+          apt update && apt install -y wget unzip
+          export PROTO_VERSION=` python setup.py egg_info | grep -Po "(\d+\.)+\d+"`
+
+          wget -O protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v${PROTO_VERSION}/protoc-${PROTO_VERSION}-linux-x86_64.zip
+          unzip protoc.zip
+          chmod +x ${PWD}/bin/
+          ${PWD}/bin/protoc --version
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: protoc
+          path: ./bin/
+
   py-format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/download-artifact@master
+        with:
+          name: protoc
+          path: ./bin/protoc
+
+      - uses: actions/checkout@v2
       - name: Update pip
-        run: python3 -m pip install --no-cache --upgrade pip setuptools wheel
+        run: python3 -m pip install --no-cache --upgrade pip
 
       - name: Install dependencies
-        run: pip3 install .[format]
+        run: PROTOC=${PWD}/bin/protoc pip3 install .[format]
 
       - name: Check PEP8 with black
         run: black . --check

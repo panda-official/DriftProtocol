@@ -14,7 +14,7 @@ from python_tools import PROTO_SPEC_FOLDER, ProtoCompiler, get_compiler_version
 
 MAJOR_VERSION = 0
 MINOR_VERSION = 1
-PATCH_VERSION = 0  # probably will never be used
+PATCH_VERSION = 0
 
 VERSION_SUFFIX = os.getenv("VERSION_SUFFIX")
 PACKAGE_NAME = "drift-protocol"
@@ -54,7 +54,7 @@ def build_version():
         version += f".{VERSION_SUFFIX}"
 
     update_package_version(
-        PROTO_OUTPUT_PATH / PACKAGE_NAME,
+        PROTO_OUTPUT_PATH / PACKAGE_NAME.replace("-", "_"),
         version=version,
         protoc_version=get_compiler_version(),
     )
