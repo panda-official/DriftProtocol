@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from python.python_tools import generate_proto, PROTO_SPEC_FOLDER
+from python_tools import generate_proto, PROTO_SPEC_FOLDER
 
 
 def test__generate_proto_for_all_protofiles(tmp_path):

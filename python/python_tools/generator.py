@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 from distutils.spawn import find_executable
 
-ROOT_FOLDER = Path(__file__).parent.parent.resolve()
+ROOT_FOLDER = Path(__file__).parent.parent.parent.resolve()
 PROTO_SPEC_FOLDER = ROOT_FOLDER / "proto_specs"
 PROTO_OUT_FOLDER = Path("./proto")
 
