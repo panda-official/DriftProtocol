@@ -74,6 +74,7 @@ jobs:
 
   py-install-protoc:
     runs-on: ubuntu-latest
+    name: "Install compatible Protobuf compiler"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -95,6 +96,7 @@ jobs:
 
   py-format:
     runs-on: ubuntu-latest
+    name: "Check PEP-8"
     needs: [ py-install-protoc ]
     steps:
       - uses: actions/checkout@v2
@@ -103,7 +105,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: protoc
-          path: ./bin/protoc
+          path: ./bin/
 
       - uses: actions/checkout@v2
       - name: Update pip
