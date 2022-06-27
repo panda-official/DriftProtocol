@@ -79,15 +79,6 @@ def read_requirements_file(filename: Path):
     return requirements
 
 
-def get_requirements(env=None):
-    """Process requirements file, respect include directives"""
-    filename = Path("./requirements.txt")
-    if env:
-        filename = Path("./requirements") / (env + ".txt")
-
-    return read_requirements_file(filename)
-
-
 def get_long_description(base_path: Path):
     return (base_path / "README.md").read_text(encoding="utf-8")
 

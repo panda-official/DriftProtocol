@@ -4,8 +4,8 @@ from conans import ConanFile, CMake, tools
 
 
 class DriftFrameworkConan(ConanFile):
-    name = "drift_proto"
-    version = "1.2.0"
+    name = "drift_protocol"
+    version = "0.1.0"
 
     license = "CLOSED"
     author = "PANDA GmbH"
@@ -44,14 +44,16 @@ class DriftFrameworkConan(ConanFile):
     def build(self):
         cmake = CMake(self)
         self.run(
-            "cmake -DCMAKE_BUILD_TYPE=Release %s/drift_proto  %s"
+            "cmake -DCMAKE_BUILD_TYPE=Release %s/drift_protocol  %s"
             % (self.source_folder, cmake.command_line)
         )
         self.run("cmake --build . -- -j")
 
     def package(self):
         self.copy(
-            "*.h", dst="include/drift_proto", src=f"{self.build_folder}/drift_proto"
+            "*.h",
+            dst="include/drift_protocol",
+            src=f"{self.build_folder}/drift_protocol",
         )
         self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("*.dll", dst="bin", keep_path=False)
@@ -59,4 +61,4 @@ class DriftFrameworkConan(ConanFile):
         self.copy("*.a", dst="lib", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = ["drift_proto"]
+        self.cpp_info.libs = ["drift_protocol"]
