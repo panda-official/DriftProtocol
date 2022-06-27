@@ -108,7 +108,7 @@ jobs:
           name: protoc
           path: ./bin/
       - name: Make protoc executable
-        run: chmod +x ${PWD}/bin/
+        run: chmod +x ${PROTOC}
 
 
       - name: Update pip
