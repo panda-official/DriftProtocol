@@ -126,14 +126,7 @@ jobs:
           name: package
           path: ./dist
 
-      - name: Update pip
-        run: python3 -m pip install --no-cache --upgrade pip
-
-      - name: Install package
-        run: pip3 install ./dist/*
-
-      - name: Install dependencies
-        run: pip3 install -r extra_requirements.txt
+      - uses: ./.github/actions/install-pkg
 
       - name: Run Pylint
         run: pylint  tests/
@@ -156,17 +149,7 @@ jobs:
 
       - uses: ./.github/actions/download-protoc
 
-      - name: Update pip
-        run: python3 -m pip install --no-cache --upgrade pip
-
-      - name: Remove system protobuf
-        run:  sudo apt-get remove -y python3-protobuf
-
-      - name: Install package
-        run: pip3 install ./dist/*
-
-      - name: Install dependencies
-        run: pip3 install -r extra_requirements.txt
+      - uses: ./.github/actions/install-pkg
 
       - name: Run Pytest
         run: pytest tests/

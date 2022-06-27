@@ -1,0 +1,21 @@
+name: "install-pkg"
+description: "Install package and extra dependencies"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/download-artifact@master
+      with:
+        name: package
+        path: ./dist
+
+    - name: Update pip
+      shell: bash
+      run: python3 -m pip install --no-cache --upgrade pip
+
+    - name: Install package
+      shell: bash
+      run: pip3 install ./dist/*
+
+    - name: Install dependencies
+      shell: bash
+      run: pip3 install -r extra_requirements.txt
