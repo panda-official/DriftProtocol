@@ -16,62 +16,60 @@ MAJOR_VERSION = 0
 MINOR_VERSION = 1
 PATCH_VERSION = 0  # probably will never be used
 
-VERSION_SUFFIX = os.getenv('VERSION_SUFFIX')
-PACKAGE_NAME = 'drift-protocol'
+VERSION_SUFFIX = os.getenv("VERSION_SUFFIX")
+PACKAGE_NAME = "drift-protocol"
 
 HERE = Path(__file__).parent.resolve()
-PROTO_OUTPUT_PATH = HERE / 'pkg'
+PROTO_OUTPUT_PATH = HERE / "pkg"
 
 
 def get_file_content(path):
-    with open(path, 'r', encoding='utf-8') as fp:
+    with open(path, "r", encoding="utf-8") as fp:
         return fp.read()
 
 
 def read_version_from_package(path):
-    """ Get version from package's __init__ file
-    """
+    """Get version from package's __init__ file"""
     version_file = get_file_content(path)
-    version_match = re.search(
-        r"^__version__ = ['\"]([^'\"]*)['\"]",
-        version_file, re.M
-    )
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", version_file, re.M)
     if version_match:
         return version_match.group(1)
     raise RuntimeError("Unable to find version string.")
 
 
 def update_package_version(path: Path, version: str, protoc_version: str):
-    """ Overwrite/create __init__.py file and fill __version__
-    """
-    template = (path / '__init__.py.in').read_text(encoding='utf-8')
-    init_content = Template(template).substitute(version=version, protoc_version=protoc_version)
-    with open(path / '__init__.py', 'w') as f:
+    """Overwrite/create __init__.py file and fill __version__"""
+    template = (path / "__init__.py.in").read_text(encoding="utf-8")
+    init_content = Template(template).substitute(
+        version=version, protoc_version=protoc_version
+    )
+    with open(path / "__init__.py", "w") as f:
         f.write(init_content)
 
 
 def build_version():
-    """ Build dynamic version and update version in package
-    """
-    version = f'{MAJOR_VERSION}.{MINOR_VERSION}.{PATCH_VERSION}'
+    """Build dynamic version and update version in package"""
+    version = f"{MAJOR_VERSION}.{MINOR_VERSION}.{PATCH_VERSION}"
     if VERSION_SUFFIX:
-        version += f'.{VERSION_SUFFIX}'
+        version += f".{VERSION_SUFFIX}"
 
-    update_package_version(PROTO_OUTPUT_PATH / PACKAGE_NAME, version=version,
-                           protoc_version=get_compiler_version())
+    update_package_version(
+        PROTO_OUTPUT_PATH / PACKAGE_NAME,
+        version=version,
+        protoc_version=get_compiler_version(),
+    )
 
     return version
 
 
 def read_requirements_file(filename: Path):
-    """ Process requirements file and handle -r lines (include files)
-    """
+    """Process requirements file and handle -r lines (include files)"""
     requirements = []
 
     with open(filename) as file:
         for line in file:
             line = line.strip()
-            if line.startswith('-r'):
+            if line.startswith("-r"):
                 included_filename = filename.parent / line.split()[1]
                 requirements.extend(read_requirements_file(included_filename))
             else:
@@ -81,26 +79,24 @@ def read_requirements_file(filename: Path):
 
 
 def get_requirements(env=None):
-    """ Process requirements file, respect include directives
-    """
-    filename = Path('./requirements.txt')
+    """Process requirements file, respect include directives"""
+    filename = Path("./requirements.txt")
     if env:
-        filename = Path('./requirements') / (env + '.txt')
+        filename = Path("./requirements") / (env + ".txt")
 
     return read_requirements_file(filename)
 
 
 def get_long_description(base_path: Path):
-    return (base_path / 'README.md').read_text(encoding='utf-8')
+    return (base_path / "README.md").read_text(encoding="utf-8")
 
 
 class BuildPyWithProtobuf(build_py):
-    """ Custom BuildPy command that generate protobuf bindings
-    """
+    """Custom BuildPy command that generate protobuf bindings"""
 
     def run(self):
-        compiler = ProtoCompiler(output_dir=str(PROTO_OUTPUT_PATH), includes=['.'])
-        for proto_filename in PROTO_SPEC_FOLDER.glob('**/*.proto'):
+        compiler = ProtoCompiler(output_dir=str(PROTO_OUTPUT_PATH), includes=["."])
+        for proto_filename in PROTO_SPEC_FOLDER.glob("**/*.proto"):
             proto_filename = proto_filename.relative_to(PROTO_SPEC_FOLDER)
             compiler.generate_proto(proto_filename)
 
@@ -139,20 +135,24 @@ class LazyPackageFinder(abc.Sequence):
 
 setup(
     cmdclass={
-        'install': InstallThatRunBuildPyFirst,
-        'build_py': BuildPyWithProtobuf,
-        'egg_info': EggInfoThatRunBuildPyFirst,
+        "install": InstallThatRunBuildPyFirst,
+        "build_py": BuildPyWithProtobuf,
+        "egg_info": EggInfoThatRunBuildPyFirst,
     },
     name=PACKAGE_NAME,
     version=build_version(),
-    description='Protobuf bindings',
+    description="Protobuf bindings",
     long_description=get_long_description(HERE),
-    long_description_content_type='text/markdown',
-    url='https://gitlab.panda.technology/drift/sdk/drift_proto',
-    author='PANDA, GmbH',
-    author_email='info@panda.technology',
-    package_dir={'': 'pkg'},
-    packages=LazyPackageFinder(finder=partial(find_packages, where='pkg')),
-    python_requires='>=3.7',
-    install_requires=get_requirements(),
+    long_description_content_type="text/markdown",
+    url="https://github.com/panda-official/DriftProtocol/",
+    author="PANDA, GmbH",
+    author_email="info@panda.technology",
+    package_dir={"": "pkg"},
+    packages=LazyPackageFinder(finder=partial(find_packages, where="pkg")),
+    python_requires=">=3.7",
+    install_requires=["protobuf==3.11.1"],
+    extras_require={
+        "test": ["pytest~=7.1.2", "pylint~=2.14.3"],
+        "format": ["black~=22.3.0"],
+    },
 )

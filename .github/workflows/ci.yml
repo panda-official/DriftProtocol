@@ -1,17 +1,17 @@
 name: Build, test and publish
 on:
   push:
-    branches: [master, develop]
+    branches: [ master, develop ]
     tags:
       - 'v*'
   pull_request:
-    branches: [master, develop]
+    branches: [ master, develop ]
 
 env:
   CONAN_USER_HOME: /home/runner/
 
 jobs:
-  build_test:
+  cpp-build:
     name: "Test C++ generation"
     runs-on: ubuntu-latest
     strategy:
@@ -32,8 +32,8 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}  ..
           cmake --build .
 
-  conan:
-    needs: [ build_test ]
+  cpp-conan:
+    needs: [ cpp-build ]
     name: "Build and upload conan package"
     runs-on: ubuntu-latest
     if: ${{ (github.ref == 'refs/heads/develop') || (startsWith(github.event.ref, 'refs/tags/v')) }}
@@ -71,16 +71,44 @@ jobs:
         with:
           path: /home/runner/.conan
           key: conan-cache
-#
-#  pip:
-#    name: Build with Pip
-#    #needs: [ conan ]
-#    runs-on: ${{ matrix.platform }}
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        platform: [ ubuntu-latest ]
-#        python-version: [ "3.8", "3.9", "3.10" ]
+
+  py-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update pip
+        run: python3 -m pip install --no-cache --upgrade pip setuptools wheel
+
+      - name: Install dependencies
+        run: pip3 install .[format]
+
+      - name: Check PEP8 with black
+        run: black . --check
+
+  py-pip:
+    name: "Build PIP package"
+    needs: [ py-format ]
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ ubuntu-latest ]
+        python-version: [ "3.8", "3.9", "3.10" ]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: pip3 install .
+
+      - name: Build package
+        run: python3 setup.py bdist_wheel
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: package
+          path: ./dist
+
 #
 #    steps:
 #      - uses: actions/checkout@v3
