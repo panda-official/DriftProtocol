@@ -126,9 +126,6 @@ jobs:
       - name: Make protoc executable
         run: chmod +x ${PROTOC}
 
-      - name: Install dependencies
-        run: pip3 install .
-
       - name: Build package
         run: python3 setup.py bdist_wheel
 
@@ -138,7 +135,7 @@ jobs:
           path: ./dist
 
   py-lint:
-    name: "Lintackage"
+    name: "Lint PIP package"
     needs: [ py-pip ]
     runs-on: ubuntu-latest
 
