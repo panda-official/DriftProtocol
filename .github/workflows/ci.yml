@@ -99,8 +99,6 @@ jobs:
     runs-on: ubuntu-latest
     name: "Check PEP-8"
     needs: [ py-install-protoc ]
-    env:
-
     steps:
       - uses: actions/checkout@v2
         with:
