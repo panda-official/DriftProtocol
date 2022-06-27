@@ -129,13 +129,13 @@ class LazyPackageFinder(abc.Sequence):
 
 setup(
     cmdclass={
-        "install": InstallThatRunBuildPyFirst,
+        # "install": InstallThatRunBuildPyFirst, Doesn't work because deps should be installed first
         "build_py": BuildPyWithProtobuf,
         "egg_info": EggInfoThatRunBuildPyFirst,
     },
     name=PACKAGE_NAME,
     version=build_version(),
-    description="rotobuf Libraries to encode message in Drift infrastructure",
+    description="Protobuf Libraries to encode message in Drift infrastructure",
     long_description=get_long_description(HERE),
     long_description_content_type="text/markdown",
     url="https://github.com/panda-official/DriftProtocol/",
