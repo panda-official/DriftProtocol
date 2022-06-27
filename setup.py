@@ -129,7 +129,7 @@ class LazyPackageFinder(abc.Sequence):
 
 setup(
     cmdclass={
-        # "install": InstallThatRunBuildPyFirst, Doesn't work because deps should be installed first
+        "install": InstallThatRunBuildPyFirst,
         "build_py": BuildPyWithProtobuf,
         "egg_info": EggInfoThatRunBuildPyFirst,
     },
