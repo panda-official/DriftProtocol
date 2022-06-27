@@ -90,6 +90,8 @@ class BuildPyWithProtobuf(build_py):
         compiler = ProtoCompiler(output_dir=str(PROTO_OUTPUT_PATH), includes=["."])
         for proto_filename in PROTO_SPEC_FOLDER.glob("**/*.proto"):
             proto_filename = proto_filename.relative_to(PROTO_SPEC_FOLDER)
+            print("Generate pb2 file from ", proto_filename)
+
             compiler.generate_proto(proto_filename)
 
         # _build_py is an old-style class, so super() doesn't work
@@ -133,7 +135,7 @@ setup(
     },
     name=PACKAGE_NAME,
     version=build_version(),
-    description="Protobuf bindings",
+    description="rotobuf Libraries to encode message in Drift infrastructure",
     long_description=get_long_description(HERE),
     long_description_content_type="text/markdown",
     url="https://github.com/panda-official/DriftProtocol/",

@@ -1,3 +1,4 @@
+# pylint: disable=import-outside-toplevel
 """ Test package after build
 """
 import os
@@ -23,6 +24,6 @@ def test_import():
     """Test if no errors during the import"""
     from drift_protocol.common import (
         DriftPackage,
-    )  # pylint: disable=import-outside-toplevel
+    )
 
     assert DriftPackage()
