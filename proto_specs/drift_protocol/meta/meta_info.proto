@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package drift.proto.meta;
+
+import "google/protobuf/timestamp.proto";
+
+// Descriptor of data in DriftPackage
+message MetaInfo {
+  DataType type = 1;
+
+  oneof info {  // type specific structures
+    TimeSeriesInfo time_series_info = 2;
+    ImageInfo image_info = 3;
+    ScalarValuesInfo scalar_info = 4;
+    TextInfo text_info = 5;
+    AlignmentInfo alignment_info = 6;
+  }
+
+  enum DataType {
+    TIME_SERIES = 0;
+    IMAGE = 1;
+    SCALAR_VALUES = 2;
+    TEXT = 3;
+    ALIGNED_PACKAGE = 4;
+  }
+}
+
+message TimeSeriesInfo {
+  google.protobuf.Timestamp start_timestamp = 1;  // timestamp of the first point in the series
+  google.protobuf.Timestamp stop_timestamp = 2;   // timestamp of the last point in the series
+  uint64 size = 3;                                // full size of the signal (all DataPayloads together)
+}
+
+message ImageInfo {
+  ImageType type = 1;
+  uint64 width = 2;
+  uint64 height = 3;
+  string channel_layout = 4; // e.g "RGB, "HSLGGGG", possible values: RBG, HSL, and G (gray)
+
+  enum ImageType {
+    WB = 0;     // compressed image with WaveletBuffer
+    JPEG = 1;   // JPEG image
+  }
+}
+
+message ScalarValuesInfo {
+  repeated VariableInfo variables = 1; // FIXME: ??? not sure variables is a good name
+  message VariableInfo {
+    string name = 1;  // name of scalar value
+  }
+}
+
+message TextInfo {
+  string mime_type = 1; // format of data, e.g. “text/plain”, “text/json;charset=UTF-8”
+}
+
+message AlignmentInfo {
+  repeated PackageInfo packages = 1;
+  message PackageInfo {
+    string topic = 1;   // name of source  MQTT topic
+  }
+}

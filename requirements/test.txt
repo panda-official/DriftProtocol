@@ -1,0 +1,4 @@
+-r prod.txt
+
+pytest==6.1.1
+pylint==2.6.0

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package drift.proto.common;
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+import "drift_protocol/common/status_code.proto";
+import "drift_protocol/meta/meta_info.proto";
+
+// A common package for communication between services
+message DriftPackage {
+  int64 id = 1; // package id
+  google.protobuf.Timestamp source_timestamp = 2; // source timestamp
+  google.protobuf.Timestamp publish_timestamp = 3; // publish timestamp
+  StatusCode status = 4; // status of data
+  repeated google.protobuf.Any data = 5; // data
+  meta.MetaInfo meta = 6; //meta information
+}

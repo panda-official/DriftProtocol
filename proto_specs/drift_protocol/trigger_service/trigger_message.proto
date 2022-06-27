@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package drift.proto.trigger_service;
+
+import "google/protobuf/timestamp.proto";
+
+// Trigger message to start capture data
+message TriggerMessage {
+  reserved 1;
+  google.protobuf.Timestamp timestamp = 2;
+}
