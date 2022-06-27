@@ -156,7 +156,7 @@ jobs:
 
   py-test:
     name: "Lint and test PIP package"
-    needs: [ py-build ]
+    needs: [ py-pip ]
     runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
