@@ -107,6 +107,7 @@ jobs:
         with:
           name: protoc
           path: ./bin/
+
       - name: Make protoc executable
         run: chmod +x ${PROTOC}
 
@@ -128,11 +129,20 @@ jobs:
       fail-fast: false
       matrix:
         platform: [ ubuntu-latest ]
-        python-version: [ "3.8", "3.9", "3.10" ]
+        python-version: [ "3.8" ]
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      - uses: actions/download-artifact@master
+        with:
+          name: protoc
+          path: ./bin/
+
+      - name: Make protoc executable
+        run: chmod +x ${PROTOC}
+
       - name: Install dependencies
         run: pip3 install .
 
