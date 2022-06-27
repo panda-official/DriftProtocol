@@ -5,8 +5,9 @@ runs:
   steps:
     - name: "Parse version and download protoc"
       shell: bash
+      working-directory: ./python
       run: |
-        apt update && apt install -y wget unzip
+        sudo apt-get update && sudo apt-get install -y wget unzip
         export PROTO_VERSION=`cat setup.py | grep PROTOBUF_VERSION | grep -Po "((\d+\.)+\d+)"`
 
         wget -O protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v${PROTO_VERSION}/protoc-${PROTO_VERSION}-linux-x86_64.zip
