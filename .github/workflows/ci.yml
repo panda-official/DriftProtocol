@@ -75,7 +75,9 @@ jobs:
   py-install-protoc:
     runs-on: ubuntu-latest
     steps:
-
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: "Parse protobuf version and dowload protoc"
         run: |
           apt update && apt install -y wget unzip
@@ -93,8 +95,11 @@ jobs:
 
   py-format:
     runs-on: ubuntu-latest
+    needs: [ py-install-protoc ]
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: actions/download-artifact@master
         with:
           name: protoc
