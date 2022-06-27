@@ -2,7 +2,7 @@ venv/
 lib/
 build/
 dist/
-pkg/drift_protocol.egg-info/
-pkg/drift_protocol
-!pkg/drift_protocol/__init__.py.in
+python/pkg/drift_protocol.egg-info/
+python/pkg/drift_protocol
+!python/pkg/drift_protocol/__init__.py.in
 js/index.js
