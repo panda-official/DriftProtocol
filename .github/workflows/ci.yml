@@ -134,6 +134,9 @@ jobs:
           name: package
           path: ./dist
 
+      - name: Update pip
+        run: python3 -m pip install --no-cache --upgrade pip
+
       - name: Install package
         run: pip3 install ./dist/*
 
@@ -158,6 +161,9 @@ jobs:
         with:
           name: package
           path: ./dist
+
+      - name: Update pip
+        run: python3 -m pip install --no-cache --upgrade pip
 
       - name: Install package
         run: pip3 install ./dist/*
