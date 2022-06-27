@@ -145,8 +145,4 @@ setup(
     packages=LazyPackageFinder(finder=partial(find_packages, where="pkg")),
     python_requires=">=3.7",
     install_requires=[f"protobuf=={PROTOBUF_VERSION}"],
-    extras_require={
-        "test": ["pytest~=7.1.2", "pylint~=2.14.3"],
-        "format": ["black~=22.3.0"],
-    },
 )

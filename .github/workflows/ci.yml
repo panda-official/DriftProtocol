@@ -15,9 +15,6 @@ jobs:
   cpp-build:
     name: "Test C++ generation"
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        build_type: [ Release ]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -30,7 +27,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}  ..
+          cmake -DCMAKE_BUILD_TYPE=Release  ..
           cmake --build .
 
   cpp-conan:
@@ -98,38 +95,24 @@ jobs:
   py-format:
     runs-on: ubuntu-latest
     name: "Check PEP-8"
-    needs: [ py-install-protoc ]
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: actions/download-artifact@master
-        with:
-          name: protoc
-          path: ./bin/
-
-      - name: Make protoc executable
-        run: chmod +x ${PROTOC}
-
 
       - name: Update pip
         run: python3 -m pip install --no-cache --upgrade pip
 
       - name: Install dependencies
-        run: pip3 install .[format]
+        run: pip3 install -r extra_requirements.txt
 
       - name: Check PEP8 with black
         run: black . --check
 
   py-pip:
     name: "Build PIP package"
-    needs: [ py-format ]
-    runs-on: ${{ matrix.platform }}
-    strategy:
-      fail-fast: false
-      matrix:
-        platform: [ ubuntu-latest ]
-        python-version: [ "3.8" ]
+    needs: [ py-format, py-install-protoc]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -154,15 +137,11 @@ jobs:
           name: package
           path: ./dist
 
-  py-test:
-    name: "Lint and test PIP package"
+  py-lint:
+    name: "Lintackage"
     needs: [ py-pip ]
-    runs-on: ${{ matrix.platform }}
-    strategy:
-      fail-fast: false
-      matrix:
-        platform: [ ubuntu-latest ]
-        python-version: [ "3.8" ]
+    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
         with:
@@ -170,31 +149,42 @@ jobs:
 
       - uses: actions/download-artifact@master
         with:
-          name: protoc
-          path: ./bin/
+          name: package
+          path: ./dist
+
+      - name: Install package
+        run: pip3 install ./dist/*
+
+      - name: Install dependencies
+        run: pip3 install -r extra_requirements.txt
+
+      - name: Run Pylint
+        run: pylint  tests/
+
+
+  py-test:
+    name: "Test PIP package"
+    needs: [ py-pip ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - uses: actions/download-artifact@master
         with:
           name: package
           path: ./dist
 
-      - name: Make protoc executable
-        run: chmod +x ${PROTOC}
-
       - name: Install package
         run: pip3 install ./dist/*
 
-      - name: Install dependencies for testing
-        run: pip3 install .[test]
-
-      - name: Run Pylint
-        run: pylint  tests/
+      - name: Install dependencies
+        run: pip3 install -r extra_requirements.txt
 
       - name: Run Pytest
         run: pytest tests/
-
-
-
 #
 #    steps:
 #      - uses: actions/checkout@v3
