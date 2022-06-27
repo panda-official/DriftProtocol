@@ -9,6 +9,7 @@ on:
 
 env:
   CONAN_USER_HOME: /home/runner/
+  PROTOC: ./bin/protoc
 
 jobs:
   cpp-build:
@@ -98,6 +99,8 @@ jobs:
     runs-on: ubuntu-latest
     name: "Check PEP-8"
     needs: [ py-install-protoc ]
+    env:
+
     steps:
       - uses: actions/checkout@v2
         with:
@@ -107,14 +110,14 @@ jobs:
           name: protoc
           path: ./bin/
       - name: debug
-        run: ls ./bin
+        run: echo $PROTOC
 
       - uses: actions/checkout@v2
       - name: Update pip
         run: python3 -m pip install --no-cache --upgrade pip
 
       - name: Install dependencies
-        run: PROTOC=${PWD}/bin/protoc pip3 install .[format]
+        run: pip3 install .[format]
 
       - name: Check PEP8 with black
         run: black . --check
