@@ -106,6 +106,8 @@ jobs:
         with:
           name: protoc
           path: ./bin/
+      - name: debug
+        run: ls ./bin
 
       - uses: actions/checkout@v2
       - name: Update pip
