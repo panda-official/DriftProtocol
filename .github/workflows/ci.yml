@@ -115,7 +115,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: package
-          path: ./dist
+          path: ./python/dist
 
   py-lint:
     name: "Lint PIP package"

@@ -6,7 +6,7 @@ runs:
     - uses: actions/download-artifact@master
       with:
         name: package
-        path: ./dist
+        path: ./python/dist
 
     - name: Update pip
       shell: bash
