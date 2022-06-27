@@ -9,7 +9,7 @@ on:
 
 env:
   CONAN_USER_HOME: /home/runner/
-  PROTOC: ./protoc/bin/protoc
+  PROTOC: ./bin/protoc
 
 jobs:
   cpp-build:
@@ -70,28 +70,6 @@ jobs:
           path: /home/runner/.conan
           key: conan-cache
 
-  py-install-protoc:
-    runs-on: ubuntu-latest
-    name: "Install compatible Protobuf compiler"
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: "Parse protobuf version and dowload protoc"
-        run: |
-          apt update && apt install -y wget unzip
-          export PROTO_VERSION=`cat setup.py | grep PROTOBUF_VERSION | grep -Po "((\d+\.)+\d+)"`
-
-          wget -O protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v${PROTO_VERSION}/protoc-${PROTO_VERSION}-linux-x86_64.zip
-          unzip protoc.zip
-          chmod +x ${PWD}/bin/
-          ${PWD}/bin/protoc --version
-
-      - uses: actions/upload-artifact@master
-        with:
-          name: protoc
-          path: ./protoc
-
   py-format:
     runs-on: ubuntu-latest
     name: "Check PEP-8"
@@ -111,28 +89,27 @@ jobs:
 
   py-pip:
     name: "Build PIP package"
-    needs: [ py-format, py-install-protoc]
+    needs: [ py-format]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
-      - uses: actions/download-artifact@master
-        with:
-          name: protoc
-          path: ./protoc
+      - name: "Parse protobuf version and dowload protoc"
+        run: |
+          apt update && apt install -y wget unzip
+          export PROTO_VERSION=`cat setup.py | grep PROTOBUF_VERSION | grep -Po "((\d+\.)+\d+)"`
 
-      - name: debug
-        run: ls -al protoc
-      - name: Make protoc executable
-        run: chmod +x ${PROTOC}
+          wget -O protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v${PROTO_VERSION}/protoc-${PROTO_VERSION}-linux-x86_64.zip
+          unzip protoc.zip
+          chmod +x ${PWD}/bin/
+          ${PWD}/bin/protoc --version
 
       - name: Build package
         run: |
           python3 setup.py egg_info
           python3 setup.py bdist_wheel
-
 
       - name: Build package
         run: python3 setup.py bdist_wheel
