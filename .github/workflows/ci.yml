@@ -107,8 +107,9 @@ jobs:
         with:
           name: protoc
           path: ./bin/
-      - name: debug
-        run: echo $PROTOC
+      - name: Make protoc executable
+        run: chmod +x ${PWD}/bin/
+
 
       - name: Update pip
         run: python3 -m pip install --no-cache --upgrade pip
