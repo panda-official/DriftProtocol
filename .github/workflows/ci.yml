@@ -73,6 +73,9 @@ jobs:
   py-format:
     runs-on: ubuntu-latest
     name: "Check PEP-8"
+    defaults:
+      run:
+        working-directory: ./python
     steps:
       - uses: actions/checkout@v2
         with:
@@ -91,6 +94,9 @@ jobs:
     name: "Build PIP package"
     needs: [ py-format]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./python
     steps:
       - uses: actions/checkout@v2
         with:
@@ -100,7 +106,6 @@ jobs:
 
       - name: Build package
         run: |
-          cd python
           python3 setup.py egg_info
           python3 setup.py bdist_wheel
 
@@ -116,7 +121,9 @@ jobs:
     name: "Lint PIP package"
     needs: [ py-pip ]
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./python
     steps:
       - uses: actions/checkout@v2
         with:
@@ -137,7 +144,9 @@ jobs:
     name: "Test PIP package"
     needs: [ py-pip ]
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./python
     steps:
       - uses: actions/checkout@v2
         with:
@@ -160,6 +169,10 @@ jobs:
     name: Upload if release
     needs: [ py-test, py-lint, py-pip ]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./python
+
     if: ${{ (github.ref == 'refs/heads/develop') || (startsWith(github.event.ref, 'refs/tags/v')) }}
 
     steps:
