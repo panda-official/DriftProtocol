@@ -165,6 +165,9 @@ jobs:
       - name: Update pip
         run: python3 -m pip install --no-cache --upgrade pip
 
+      - name: Remove system protobuf
+        run:  apt remove -y python3-protobuf
+
       - name: Install package
         run: pip3 install ./dist/*
 
