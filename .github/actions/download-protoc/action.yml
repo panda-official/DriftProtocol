@@ -1,6 +1,5 @@
 name: "download-protoc"
 description: "Download protoc"
-inputs:
 runs:
   using: "composite"
   steps:
