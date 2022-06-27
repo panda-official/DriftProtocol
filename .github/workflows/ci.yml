@@ -1,4 +1,4 @@
-name: Compile project and run C++ tests [Linux]
+name: Build, test and publish
 on:
   push:
     branches: [master, develop]
