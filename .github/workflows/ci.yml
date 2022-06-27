@@ -154,6 +154,47 @@ jobs:
           name: package
           path: ./dist
 
+  py-test:
+    name: "Lint and test PIP package"
+    needs: [ py-build ]
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ ubuntu-latest ]
+        python-version: [ "3.8" ]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@master
+        with:
+          name: protoc
+          path: ./bin/
+
+      - uses: actions/download-artifact@master
+        with:
+          name: package
+          path: ./dist
+
+      - name: Make protoc executable
+        run: chmod +x ${PROTOC}
+
+      - name: Install package
+        run: pip3 install ./dist/*
+
+      - name: Install dependencies for testing
+        run: pip3 install .[test]
+
+      - name: Run Pylint
+        run: pylint  tests/
+
+      - name: Run Pytest
+        run: pytest tests/
+
+
+
 #
 #    steps:
 #      - uses: actions/checkout@v3
