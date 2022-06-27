@@ -81,7 +81,7 @@ jobs:
       - name: "Parse protobuf version and dowload protoc"
         run: |
           apt update && apt install -y wget unzip
-          export PROTO_VERSION=` python setup.py egg_info | grep -Po "(\d+\.)+\d+"`
+          export PROTO_VERSION=`cat setup.py | grep PROTOBUF_VERSION | grep -Po "((\d+\.)+\d+)"`
 
           wget -O protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v${PROTO_VERSION}/protoc-${PROTO_VERSION}-linux-x86_64.zip
           unzip protoc.zip

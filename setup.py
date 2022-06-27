@@ -16,6 +16,7 @@ MAJOR_VERSION = 0
 MINOR_VERSION = 1
 PATCH_VERSION = 0
 
+PROTOBUF_VERSION = "3.11.1"  # DON'T REMOVE WE USE IT CI
 VERSION_SUFFIX = os.getenv("VERSION_SUFFIX")
 PACKAGE_NAME = "drift-protocol"
 
@@ -150,7 +151,7 @@ setup(
     package_dir={"": "pkg"},
     packages=LazyPackageFinder(finder=partial(find_packages, where="pkg")),
     python_requires=">=3.7",
-    install_requires=["protobuf==3.11.1"],
+    install_requires=[f"protobuf=={PROTOBUF_VERSION}"],
     extras_require={
         "test": ["pytest~=7.1.2", "pylint~=2.14.3"],
         "format": ["black~=22.3.0"],
