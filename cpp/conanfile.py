@@ -20,9 +20,9 @@ class DriftFrameworkConan(ConanFile):
     requires = ("protobuf/3.11.3",)
 
     def set_version(self):
-        build_id = os.getenv("CI_JOB_ID")
-        if build_id and os.getenv("CI_COMMIT_BRANCH"):
-            self.version += f"-b.{build_id}"
+        suffix = os.getenv("VERSION_SUFFIX")
+        if suffix:
+            self.version += f"-b.{suffix}"
 
     def config_options(self):
         if self.settings.os == "Windows":

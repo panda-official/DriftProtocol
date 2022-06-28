@@ -52,7 +52,7 @@ def build_version():
     """Build dynamic version and update version in package"""
     version = f"{MAJOR_VERSION}.{MINOR_VERSION}.{PATCH_VERSION}"
     if VERSION_SUFFIX:
-        version += f".{VERSION_SUFFIX}"
+        version += f"dev.{VERSION_SUFFIX}"
 
     update_package_version(
         PROTO_OUTPUT_PATH / PACKAGE_NAME.replace("-", "_"),
