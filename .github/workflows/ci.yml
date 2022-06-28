@@ -77,31 +77,25 @@ jobs:
       - name: Install conan
         run: pip3 install conan
 
+      - name: Prefix version for development version
+        if: ${{ (github.ref == 'refs/heads/develop') }}
+        run: echo "VERSION_SUFFIX=b$(echo ${GITHUB_RUN_ID})" >> $GITHUB_ENV
+
       - name: Create profile
         run: |
-          cd conan
           conan profile new default --detect
           conan profile update settings.compiler.libcxx=libstdc++11 default
       - name: Build package for stable channel
         if: github.ref_type == 'tag'
-        run: |
-          cd conan
-          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable
+        run: CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable
       - name: Build package for develop channel
         if: github.ref_type == 'branch'
-        run: |
-          cd conan
-          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
+        run: CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
       - name: Upload package
         run: |
           conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
           conan user -p ${{secrets.CONAN_PASSWORD}} -r panda --skip-auth ${{secrets.CONAN_LOGIN_USERNAME}}
           conan upload wavelet_buffer --all --confirm --remote=panda
-      - name: Cache .conan directory
-        uses: actions/cache@v3
-        with:
-          path: /home/runner/.conan
-          key: conan-cache
 
   py-format:
     runs-on: ubuntu-latest
@@ -139,7 +133,7 @@ jobs:
 
       - name: Prefix version for development version
         if: ${{ (github.ref == 'refs/heads/develop') }}
-        run: echo "VERSION_SUFFIX=$(echo ${GITHUB_RUN_ID})" >> $GITHUB_ENV
+        run: echo "VERSION_SUFFIX=b$(echo ${GITHUB_RUN_ID})" >> $GITHUB_ENV
 
       - name: Build package
         run: |
