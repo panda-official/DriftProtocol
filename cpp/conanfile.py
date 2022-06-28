@@ -7,10 +7,10 @@ class DriftFrameworkConan(ConanFile):
     name = "drift_protocol"
     version = "0.1.0"
 
-    license = "CLOSED"
+    license = "MPL-2.0"
     author = "PANDA GmbH"
-    url = "https://gitlab.panda.technology/drift/sdk/drift_proto"
-    description = "A collection of protobuf structures and helpers"
+    url = "https://github.com/panda-official/DriftProtocol.git"
+    description = "Protobuf Library to encode message in Drift infrastructure"
     topics = ("protobuf",)
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False], "fPIC": [True, False]}
@@ -38,13 +38,13 @@ class DriftFrameworkConan(ConanFile):
             branch = f"v{self.version}" if self.channel == "stable" else self.channel
             self.run(
                 f"git clone --branch={branch}"
-                " git@gitlab.panda.technology:drift/sdk/drift_proto.git drift_proto"
+                " https://github.com/panda-official/DriftProtocol.git drift_protocol"
             )
 
     def build(self):
         cmake = CMake(self)
         self.run(
-            "cmake -DCMAKE_BUILD_TYPE=Release %s/drift_protocol  %s"
+            "cmake -DCMAKE_BUILD_TYPE=Release %s/cpp  %s"
             % (self.source_folder, cmake.command_line)
         )
         self.run("cmake --build . -- -j")
