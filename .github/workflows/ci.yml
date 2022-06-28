@@ -33,8 +33,34 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release  ..
           cmake --build .
 
-  cpp-conan-upload:
+  cpp-conan-test:
     needs: [ cpp-build ]
+    name: "Build package and
+    "
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./cpp
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install conan
+        run: pip3 install conan
+
+      - name: Build test package
+        run: CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable
+
+      - name: Build example
+        run: |
+          mkdir build && cd build
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+          cmake --build .
+      - name: Run example
+        run: ./build/bin/drift_protocol_example
+
+  cpp-conan-upload:
+    needs: [ cpp-conan-test ]
     name: "Build and upload conan package"
     runs-on: ubuntu-latest
     defaults:
@@ -98,7 +124,7 @@ jobs:
 
   py-pip:
     name: "Build PIP package"
-    needs: [ py-format]
+    needs: [ py-format ]
     runs-on: ubuntu-latest
     defaults:
       run:
