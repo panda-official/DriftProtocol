@@ -11,6 +11,7 @@ env:
   CONAN_USER_HOME: /home/runner/
   PROTOC: ./bin/protoc
 
+
 jobs:
   cpp-build:
     name: "Test C++ generation"
@@ -136,6 +137,10 @@ jobs:
 
       - uses: ./.github/actions/download-protoc
 
+      - name: Prefix version for development version
+        if: ${{ (github.ref == 'refs/heads/develop') }}
+        run: echo "VERSION_SUFFIX=$(echo ${GITHUB_RUN_ID})" >> $GITHUB_ENV
+
       - name: Build package
         run: |
           python3 setup.py egg_info
@@ -196,7 +201,6 @@ jobs:
         working-directory: ./python
 
     if: ${{ (github.ref == 'refs/heads/develop') || (startsWith(github.event.ref, 'refs/tags/v')) }}
-
     steps:
       - uses: actions/setup-python@v2
 
