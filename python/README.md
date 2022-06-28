@@ -6,7 +6,7 @@ It provides pre-generated Protobuf messages so that you don't need to install pr
 
 ## Features
 
-* Pure Python
+* Protocol Buffer 3
 * No Protobuf Compiler and generation needed
 
 ## Install
@@ -23,7 +23,6 @@ pip install -U drift-protocol
 Parsing a Drift package:
 
 ```python
-
 from drift_protocol.common import DriftPackage, DataPayload, StatusCode
 
 some_blob_received_from_drift = "...."
