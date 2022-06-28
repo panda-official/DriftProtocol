@@ -35,8 +35,7 @@ jobs:
 
   cpp-conan-test:
     needs: [ cpp-build ]
-    name: "Build package and
-    "
+    name: "Test package with example"
     runs-on: ubuntu-latest
     defaults:
       run:

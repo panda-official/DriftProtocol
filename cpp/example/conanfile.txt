@@ -1,6 +1,6 @@
 [requires]
 
-drift_protocol/(latest)@drift/test
+drift_protocol/[<1.0]@drift/test
 
 [generators]
 cmake
