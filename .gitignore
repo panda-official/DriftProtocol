@@ -1,0 +1,7 @@
+venv/
+lib/
+build/
+dist/
+python/pkg/drift_protocol.egg-info/
+python/pkg/drift_protocol
+!python/pkg/drift_protocol/__init__.py.in

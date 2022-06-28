@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package drift.proto.trigger_service;
+
+import "google/protobuf/timestamp.proto";
+
+// Trigger message to capture data on given period
+message IntervalTriggerMessage {
+    reserved 1;
+    google.protobuf.Timestamp start_timestamp = 2;
+    google.protobuf.Timestamp stop_timestamp = 3;
+}

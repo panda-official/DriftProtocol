@@ -1,0 +1,212 @@
+name: Build, test and publish
+on:
+  push:
+    branches: [ master, develop ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ master, develop ]
+
+env:
+  CONAN_USER_HOME: /home/runner/
+  PROTOC: ./bin/protoc
+
+jobs:
+  cpp-build:
+    name: "Test C++ generation"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./cpp
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install conan
+        run: pip3 install conan
+
+      - name: Build package
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release  ..
+          cmake --build .
+
+  cpp-conan-test:
+    needs: [ cpp-build ]
+    name: "Test package with example"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./cpp
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install conan
+        run: pip3 install conan
+
+      - name: Build test package
+        run: CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable
+
+      - name: Build example
+        run: |
+          mkdir example/build
+          cd example/build
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+          cmake --build . --target all
+      - name: Run example
+        run: ./example/build/bin/drift_protocol_example
+
+  cpp-conan-upload:
+    needs: [ cpp-conan-test ]
+    name: "Build and upload conan package"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./cpp
+    if: ${{ (github.ref == 'refs/heads/develop') || (startsWith(github.event.ref, 'refs/tags/v')) }}
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install conan
+        run: pip3 install conan
+
+      - name: Create profile
+        run: |
+          cd conan
+          conan profile new default --detect
+          conan profile update settings.compiler.libcxx=libstdc++11 default
+      - name: Build package for stable channel
+        if: github.ref_type == 'tag'
+        run: |
+          cd conan
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable
+      - name: Build package for develop channel
+        if: github.ref_type == 'branch'
+        run: |
+          cd conan
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
+      - name: Upload package
+        run: |
+          conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
+          conan user -p ${{secrets.CONAN_PASSWORD}} -r panda --skip-auth ${{secrets.CONAN_LOGIN_USERNAME}}
+          conan upload wavelet_buffer --all --confirm --remote=panda
+      - name: Cache .conan directory
+        uses: actions/cache@v3
+        with:
+          path: /home/runner/.conan
+          key: conan-cache
+
+  py-format:
+    runs-on: ubuntu-latest
+    name: "Check PEP-8"
+    defaults:
+      run:
+        working-directory: ./python
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Update pip
+        run: python3 -m pip install --no-cache --upgrade pip
+
+      - name: Install dependencies
+        run: pip3 install -r extra_requirements.txt
+
+      - name: Check PEP8 with black
+        run: black . --check
+
+  py-pip:
+    name: "Build PIP package"
+    needs: [ py-format ]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./python
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/download-protoc
+
+      - name: Build package
+        run: |
+          python3 setup.py egg_info
+          python3 setup.py bdist_wheel
+
+      - name: Build package
+        run: python3 setup.py bdist_wheel
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: package
+          path: ./python/dist
+
+  py-lint:
+    name: "Lint PIP package"
+    needs: [ py-pip ]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./python
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/install-pkg
+
+      - name: Run Pylint
+        run: pylint  tests/
+
+
+  py-test:
+    name: "Test PIP package"
+    needs: [ py-pip ]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./python
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/download-protoc
+
+      - uses: ./.github/actions/install-pkg
+
+      - name: Run Pytest
+        run: pytest tests/
+
+
+  py-pip-upload:
+    name: Upload if release
+    needs: [ py-test, py-lint, py-pip ]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./python
+
+    if: ${{ (github.ref == 'refs/heads/develop') || (startsWith(github.event.ref, 'refs/tags/v')) }}
+
+    steps:
+      - uses: actions/setup-python@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: package
+          path: ./dist
+
+      - uses: pypa/gh-action-pypi-publish@v1.5.0
+        with:
+          user: ${{ secrets.PYPI_USERNAME }}
+          password: ${{ secrets.PYPI_PASSWORD }}
+          repository_url: https://pypi.panda.technology

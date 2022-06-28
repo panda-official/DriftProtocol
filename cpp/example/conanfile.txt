@@ -1,0 +1,6 @@
+[requires]
+
+drift_protocol/[<1.0]@drift/stable
+
+[generators]
+cmake
