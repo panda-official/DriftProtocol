@@ -1,4 +1,4 @@
-set(PROTO_SPEC_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/proto_specs)
+set(PROTO_SPEC_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../proto_specs)
 
 # Generate protoc files
 set(PROTOBUF_SPEC_FILES
