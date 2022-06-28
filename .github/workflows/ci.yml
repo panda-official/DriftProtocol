@@ -57,7 +57,7 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --target all
       - name: Run example
-        run: ./build/bin/drift_protocol_example
+        run: ./example/build/bin/drift_protocol_example
 
   cpp-conan-upload:
     needs: [ cpp-conan-test ]
