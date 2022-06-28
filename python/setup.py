@@ -13,7 +13,7 @@ from setuptools.command.egg_info import egg_info
 from python_tools import PROTO_SPEC_FOLDER, ProtoCompiler, get_compiler_version
 
 MAJOR_VERSION = 0
-MINOR_VERSION = 1
+MINOR_VERSION = 2
 PATCH_VERSION = 0
 
 PROTOBUF_VERSION = "3.11.1"  # DON'T REMOVE WE USE IT CI
