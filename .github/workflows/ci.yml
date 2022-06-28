@@ -95,7 +95,7 @@ jobs:
         run: |
           conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
           conan user -p ${{secrets.CONAN_PASSWORD}} -r panda --skip-auth ${{secrets.CONAN_LOGIN_USERNAME}}
-          conan upload wavelet_buffer --all --confirm --remote=panda
+          conan upload drift_protocol --all --confirm --remote=panda
 
   py-format:
     runs-on: ubuntu-latest
