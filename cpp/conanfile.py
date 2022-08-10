@@ -32,19 +32,20 @@ class DriftFrameworkConan(ConanFile):
         local_source = os.getenv("CONAN_SOURCE_DIR")
         if local_source is not None:
             self.run(
-                "cp %s -r %s" % (os.getenv("CONAN_SOURCE_DIR"), self.source_folder)
+                "cp %s -r %s"
+                % (os.getenv("CONAN_SOURCE_DIR"), f"{self.source_folder}/{self.name}")
             )
         else:
             branch = f"v{self.version}" if self.channel == "stable" else self.channel
             self.run(
                 f"git clone --branch={branch}"
-                " https://github.com/panda-official/DriftProtocol.git drift_protocol"
+                f" https://github.com/panda-official/DriftProtocol.git {self.name}"
             )
 
     def build(self):
         cmake = CMake(self)
         self.run(
-            "cmake -DCMAKE_BUILD_TYPE=Release %s/cpp  %s"
+            "cmake -DCMAKE_BUILD_TYPE=Release %s/drift_protocol/cpp  %s"
             % (self.source_folder, cmake.command_line)
         )
         self.run("cmake --build . -- -j")
