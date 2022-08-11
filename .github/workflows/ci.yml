@@ -194,7 +194,7 @@ jobs:
       run:
         working-directory: ./python
 
-    if: ${{ startsWith(github.event.ref, 'refs/tags/v')) }}
+    if: ${{ startsWith(github.event.ref, 'refs/tags/v') }}
     steps:
       - uses: actions/setup-python@v2
 
