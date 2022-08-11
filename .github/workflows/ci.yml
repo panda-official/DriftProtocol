@@ -194,7 +194,7 @@ jobs:
       run:
         working-directory: ./python
 
-    if: ${{ (github.ref == 'refs/heads/develop') || (startsWith(github.event.ref, 'refs/tags/v')) }}
+    if: ${{ startsWith(github.event.ref, 'refs/tags/v')) }}
     steps:
       - uses: actions/setup-python@v2
 
@@ -207,4 +207,3 @@ jobs:
         with:
           user: ${{ secrets.PYPI_USERNAME }}
           password: ${{ secrets.PYPI_PASSWORD }}
-          repository_url: https://pypi.panda.technology
