@@ -18,3 +18,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - DRIFT-492: Port to Github, [PR-1](https://github.com/panda-official/DriftProtocol/pull/1)
+- HOTFIX: update to newer alignment package format, [PR-4](https://github.com/panda-official/DriftProtocol/pull/4)
