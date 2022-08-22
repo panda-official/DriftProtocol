@@ -11,10 +11,16 @@ It provides pre-generated Protobuf messages so that you don't need to install pr
 
 ## Install
 
-You can install the library as a PIP package
+You can install the library as a PIP package with prebuilt Protobuf messages:
 
 ```
 pip install -U drift-protocol
+```
+
+if you want to build the messages on your machine you can install it from the git repository:
+
+```
+pip install git+https://github.com/panda-official/DriftProtocol.git#subdirectory=python
 ```
 
 ## Usage example

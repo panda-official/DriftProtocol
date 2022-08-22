@@ -7,7 +7,7 @@ generate them yourself.
 ## Implementations
 
 * [C++](cpp/README.md)
-* [Python](cpp/README.md)
+* [Python](python/README.md)
 
 ## Related Projects
 

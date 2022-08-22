@@ -4,5 +4,5 @@ __version__ = '$version'
 
 import google.protobuf as protobuf
 
-if protobuf.__version__ != '$protoc_version':
-    raise RuntimeError(f'Version of protobuf PIP package must be $protoc_version. However you have {protobuf.__version__}')
+if protobuf.__version__ < '$protoc_version':
+    raise RuntimeError(f'Version of protobuf PIP package must be >=$protoc_version. However you have {protobuf.__version__}')
