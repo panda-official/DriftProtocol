@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package drift.proto.common;
+
 // A binary data are sent between services
 message DataPayload {
   repeated uint32 shape = 1; // shape of the data (if compressed the shape of the origin data)

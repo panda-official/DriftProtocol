@@ -1,7 +1,7 @@
 #include <drift_protocol/common/data_payload.pb.h>
 #include <drift_protocol/common/drift_package.pb.h>
 
-using drift::proto::common::DataPayload;
+using ::DataPayload;
 using drift::proto::common::DriftPackage;
 using drift::proto::common::StatusCode;
 
