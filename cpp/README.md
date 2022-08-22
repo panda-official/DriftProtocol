@@ -5,7 +5,7 @@ It provides pre-generated Protobuf messages so that you don't need to install pr
 
 ## Features
 
-* Protocol Buffer 3
+* Protocol Buffer >=3.12.4, <=3.19  
 * No Protobuf Compiler and generation needed
 * Conan distribution
 

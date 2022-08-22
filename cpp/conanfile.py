@@ -17,7 +17,7 @@ class DriftFrameworkConan(ConanFile):
     default_options = {"shared": False, "fPIC": True}
     generators = "cmake"
 
-    requires = ("protobuf/[>=3.12.4, <=3.20]",)
+    requires = ("protobuf/[>=3.12.4, <=3.18]",)
 
     def set_version(self):
         suffix = os.getenv("VERSION_SUFFIX")
