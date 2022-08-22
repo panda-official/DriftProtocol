@@ -13,7 +13,7 @@ runs:
         wget -O protoc.zip https://github.com/protocolbuffers/protobuf/releases/download/v${PROTO_VERSION}/protoc-${PROTO_VERSION}-linux-x86_64.zip
         unzip protoc.zip
         chmod +x ${PWD}/bin/protoc
-        sudo mv ${PWD}/bin /usr/local/bin
-        sudo mv ${PWD}/include /usr/local/include 
+        sudo mv ${PWD}/bin -t /usr/local/
+        sudo mv ${PWD}/include -t /usr/local/ 
 
         protoc --version
