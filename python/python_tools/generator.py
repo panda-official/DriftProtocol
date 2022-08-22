@@ -78,12 +78,13 @@ class ProtoCompiler:
         includes = (f"-I{source_path.parent.resolve()}", *self.includes)
         protoc_command = [
             self.protoc,
-            *includes,
-            f"--python_out={output_path.parent}",
-            str(source_path),
+            "-I.",
+            f"--python_out={self.output_dir}",
+            str(source),
         ]
 
-        if subprocess.call(protoc_command) != 0:
+        print(protoc_command)
+        if subprocess.call(protoc_command, cwd=PROTO_SPEC_FOLDER) != 0:
             sys.exit(-1)
 
         return str(output_path)
