@@ -1,4 +1,4 @@
-//syntax = "proto3";
+syntax = "proto3";
 //
 //package drift.proto.alignment_service;
 //
@@ -8,3 +8,5 @@
 //  string topic_name = 1;
 //  repeated common.DataPayload payloads = 2;
 //}
+
+message Stub {}
