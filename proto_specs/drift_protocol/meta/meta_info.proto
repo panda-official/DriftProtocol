@@ -58,5 +58,6 @@ message AlignmentInfo {
   repeated PackageInfo packages = 1;
   message PackageInfo {
     string topic = 1;   // name of source  MQTT topic
+    MetaInfo meta = 2;  // meta information
   }
 }
