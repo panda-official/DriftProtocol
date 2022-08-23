@@ -2,7 +2,6 @@ set(PROTO_SPEC_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../proto_specs)
 
 # Generate protoc files
 set(PROTOBUF_SPEC_FILES
-        ${PROTO_SPEC_ROOT_DIR}/drift_protocol/alignment_service/aligned_package.proto
         ${PROTO_SPEC_ROOT_DIR}/drift_protocol/common/drift_package.proto
         ${PROTO_SPEC_ROOT_DIR}/drift_protocol/common/data_payload.proto
         ${PROTO_SPEC_ROOT_DIR}/drift_protocol/common/status_code.proto
@@ -12,7 +11,6 @@ set(PROTOBUF_SPEC_FILES
         )
 
 set(PROTOBUF_FILES
-        ${CMAKE_BINARY_DIR}/drift_protocol/alignment_service/aligned_package.pb.cc
         ${CMAKE_BINARY_DIR}/drift_protocol/common/drift_package.pb.cc
         ${CMAKE_BINARY_DIR}/drift_protocol/common/data_payload.pb.cc
         ${CMAKE_BINARY_DIR}/drift_protocol/common/status_code.pb.cc
@@ -23,9 +21,6 @@ set(PROTOBUF_FILES
 
 
 add_custom_command(OUTPUT ${PROTOBUF_FILES}
-        COMMAND ${Protobuf_PROTOC_EXECUTABLE} -I=${PROTO_SPEC_ROOT_DIR}/
-        --cpp_out=${CMAKE_BINARY_DIR} ${PROTO_SPEC_ROOT_DIR}/drift_protocol/alignment_service/*
-
         COMMAND ${Protobuf_PROTOC_EXECUTABLE} -I=${PROTO_SPEC_ROOT_DIR}/
         --cpp_out=${CMAKE_BINARY_DIR} ${PROTO_SPEC_ROOT_DIR}/drift_protocol/common/*
 

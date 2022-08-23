@@ -75,7 +75,6 @@ class ProtoCompiler:
             self._create_package(Path(source))
 
         print(f"Generating {output_path}...")
-        includes = (f"-I{source_path.parent.resolve()}", *self.includes)
         protoc_command = [
             self.protoc,
             "-I.",

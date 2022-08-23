@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Build for Protobuf 3.12.4. Requires >=3.12.4 <=3.20.1, [PR-3](https://github.com/panda-official/DriftProtocol/pull/5)
 
+### Removed
+
+- AlignedPackage and add meta to PackageInfo, [PR-4](https://github.com/panda-official/DriftProtocol/pull/4)
 
 ## 0.1.0 - 2022-06-28
 
