@@ -11,14 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Building conan pkg from source, [PR-2](https://github.com/panda-official/DriftProtocol/pull/2)
 
+### Changed:
 
+- Build for Protobuf 3.12.4. Requires >=3.12.4 <=3.20.1, [PR-3](https://github.com/panda-official/DriftProtocol/pull/5)
+
+### Removed
+
+- AlignedPackage and add meta to PackageInfo, [PR-4](https://github.com/panda-official/DriftProtocol/pull/4)
 
 ## 0.1.0 - 2022-06-28
 
 ### Added
 
 - DRIFT-492: Port to Github, [PR-1](https://github.com/panda-official/DriftProtocol/pull/1)
-
-### Removed
-
-- Remove AlignedPackage and add meta to PackageInfo, [PR-4](https://github.com/panda-official/DriftProtocol/pull/4)
