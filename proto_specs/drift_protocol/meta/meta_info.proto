@@ -29,6 +29,11 @@ message TimeSeriesInfo {
   google.protobuf.Timestamp start_timestamp = 1;  // timestamp of the first point in the series
   google.protobuf.Timestamp stop_timestamp = 2;   // timestamp of the last point in the series
   uint64 size = 3;                                // full size of the signal (all DataPayloads together)
+  float first = 4;                                // first value in series
+  float last = 5;                                 // last value in series
+  float min = 6;                                  // min value in series
+  float max = 7;                                  // max value in series
+  float mean = 8;                                 // mean
 }
 
 message ImageInfo {
