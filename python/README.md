@@ -1,8 +1,8 @@
 # Drift Protocol for Python
 
 A Python Protobuf library to encode message in Drift infrastructure.
-It provides pre-generated Protobuf messages so that you don't need to install protobuf compiler and generate them yourself.
-
+It provides pre-generated Protobuf messages so that you don't need to install protobuf compiler and generate them
+yourself.
 
 ## Features
 
@@ -25,7 +25,6 @@ pip install git+https://github.com/panda-official/DriftProtocol.git#subdirectory
 
 ## Usage example
 
-
 Parsing a Drift package:
 
 ```python
@@ -47,7 +46,9 @@ for any_data in package.data:
         data: bytes = payload.data
 ```
 
-
 ## Related Projects
 
-* [WaveletBuffer](https://github.com/panda-official/WaveletBuffer) - A universal C++ compression library based on wavelet transformation
+* [WaveletBuffer](https://github.com/panda-official/WaveletBuffer) - A universal C++ compression library based on
+  wavelet transformation
+* [Drift Python Client](https://github.com/panda-official/DriftPythonClient) - Python Client to access data of
+  PANDA|Drift

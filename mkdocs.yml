@@ -3,6 +3,12 @@ docs_dir: .
 nav:
   - Home:
       - README: README.md
+      - For C++: cpp/README.md
+      - For Python: python/README.md
+  - API Reference:
+      - docs/api/common.md
+      - docs/api/meta.md
+      - docs/api/triggering.md
 
 repo_name: panda-official/DriftProtocol
 repo_url: https://github.com/panda-official/DriftProtocol

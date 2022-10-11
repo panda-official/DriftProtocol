@@ -1,16 +1,16 @@
 # Drift Protocol for C++
 
 A C++ Protobuf library to encode message in Drift infrastructure.
-It provides pre-generated Protobuf messages so that you don't need to install protobuf compiler and generate them yourself.
+It provides pre-generated Protobuf messages so that you don't need to install protobuf compiler and generate them
+yourself.
 
 ## Features
 
-* Protocol Buffer ==3.12.4, <=3.19  
+* Protocol Buffer ==3.12.4, <=3.19
 * No Protobuf Compiler and generation needed
 * Conan distribution
 
 ## Integration
-
 
 ### Conan
 
@@ -27,7 +27,6 @@ Then add into your `conanfile.txt` or `conanfile.py`:
 ```
 drift_protocol/x.y.z@drift/stable
 ```
-
 
 ## Usage example
 
@@ -64,4 +63,7 @@ int main() {
 
 ## Related Projects
 
-* [WaveletBuffer](https://github.com/panda-official/WaveletBuffer) - A universal C++ compression library based on wavelet transformation
+* [WaveletBuffer](https://github.com/panda-official/WaveletBuffer) - A universal C++ compression library based on
+  wavelet transformation
+* [Drift Python Client](https://github.com/panda-official/DriftPythonClient) - Python Client to access data of
+  PANDA|Drift
