@@ -9,6 +9,12 @@ generate them yourself.
 * [For C++](cpp/README.md)
 * [For Python](python/README.md)
 
+## Example
+
+**TBD**
+
+![Drift Protocol Example](docs/img/UseCase.drawio.svg)
+
 ## Related Projects
 
 * [WaveletBuffer](https://github.com/panda-official/WaveletBuffer) - A universal C++ compression library based on wavelet transformation

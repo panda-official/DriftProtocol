@@ -7,14 +7,14 @@ Package: **drift.proto.common**
 A basic package for communication between services in PANDA|Drift infrastructure. All messages in Drift are wrapped into
 it, so that the PANDA|Drift infrastructure can handle and store them.
 
-| Name              | Type                                | Description                                                                       |
-|-------------------|-------------------------------------|-----------------------------------------------------------------------------------|
-| id                | int64                               | Package ID (Unix time in milliseconds)                                            |
-| source_timestamp  | Timestamp                           | Timestamp when a service has received  an input package                           |
-| publish_timestamp | Timestamp                           | Timestamp when a service has done its job and sends an output package             |
-| status            | [StatusCode](#StatusCode)           | Status of the package. .                                                          |
-| data              | Any[]                               | An array of any protobuf messages, it may be Drift Payload’s, Trigger Message etc |
-| meta              | [MetaInfo](/docs/api/meta#MetaInfo) | See [MetProtocol](/docs/api/meta)                                                 |
+| Name              | Type                                      | Description                                                                       |
+|-------------------|-------------------------------------------|-----------------------------------------------------------------------------------|
+| id                | int64                                     | Package ID (Unix time in milliseconds)                                            |
+| source_timestamp  | Timestamp                                 | Timestamp when a service has received  an input package                           |
+| publish_timestamp | Timestamp                                 | Timestamp when a service has done its job and sends an output package             |
+| status            | [StatusCode](/docs/api/common#statuscode) | Status of the package. .                                                          |
+| data              | Any[]                                     | An array of any protobuf messages, it may be Drift Payload’s, Trigger Message etc |
+| meta              | [MetaInfo](/docs/api/meta#metainfo)       | See [MetProtocol](/docs/api/meta)                                                 |
 
 ## DataPayload
 
