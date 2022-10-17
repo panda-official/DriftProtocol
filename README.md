@@ -14,7 +14,7 @@ generate them yourself.
 
 Here you can see a simple microservice application based on Drift Protocol:
 
-![Drift Protocol Example](docs/img/UseCase.drawio.svg)
+![Drift Protocol Example](docs/img/example.drawio.svg)
 
 Trigger Service publishes a trigger as a [Drift Package](docs/api/common/#driftpackage) with ID = 1630062869443 and
 a [Trigger Interval Message](docs/api/triggering/#intervaltriggermessage), which contains a time interval [t0, t1], to
@@ -24,9 +24,8 @@ Timeswipe Service subscribes on the `trigger` topic and receives the trigger pac
 points from some data source for the interval [t0, t1], compresses, serializes the data and sends it to MQTT
 topic `drift/sensor` as a [Drift Package](docs/api/common/#driftpackage) with
 a [Data Payload](docs/api/common/#datapayload) inside. It contains a
-serialized [Wavelet Buffer](https://github.com/panda-official/WaveletBuffer)
-in the `data` field. The ID of the packages is the same ID=1630062869443, so we see that the trigger and the data are
-connected.
+serialized [Wavelet Buffer](https://github.com/panda-official/WaveletBuffer) in the `data` field. The ID of the packages
+is the same ID=1630062869443, so we see that the trigger and the data are connected.
 
 The [Drift Core](https://driftpythonclient.readthedocs.io/en/latest/docs/panda_drift/) services subscribe on all MQTT
 topics which have `drift/` prefix, parse [Drift Packages](docs/api/common/#driftpackage) and store them in the metric

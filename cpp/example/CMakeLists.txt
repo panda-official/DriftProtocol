@@ -23,5 +23,18 @@ include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
 
-add_executable(drift_protocol_example main.cc)
-target_link_libraries(drift_protocol_example ${CONAN_LIBS})
+add_executable(drift_package_example drift_package_example.cc)
+target_link_libraries(drift_package_example ${CONAN_LIBS})
+
+add_executable(trigger_message_example trigger_message_example.cc)
+target_link_libraries(trigger_message_example ${CONAN_LIBS})
+
+add_executable(payload_with_image_example payload_with_image_example.cc)
+target_link_libraries(payload_with_image_example ${CONAN_LIBS})
+target_compile_definitions(payload_with_image_example PRIVATE IMAGE_PATH="${CMAKE_CURRENT_SOURCE_DIR}/pandas.jpg")
+
+add_executable(payload_with_timeseries_example payload_with_timeseries_example.cc)
+target_link_libraries(payload_with_timeseries_example ${CONAN_LIBS})
+
+add_executable(payload_with_scalars payload_with_scalars.cc)
+target_link_libraries(payload_with_scalars ${CONAN_LIBS})
