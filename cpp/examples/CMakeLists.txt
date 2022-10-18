@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(drift_protocol_example VERSION 0.1.0)
+project(drift_protocol_examples VERSION 0.1.0)
 set(CMAKE_CXX_STANDARD 17)
 
 if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")

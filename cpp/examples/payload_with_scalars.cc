@@ -8,13 +8,13 @@ using drift::proto::common::DataPayload;
 using drift::proto::common::DriftPackage;
 using drift::proto::common::StatusCode;
 using drift::proto::meta::MetaInfo;
-using drift::proto::meta::TimeSeriesInfo;
+using drift::proto::meta::ScalarValuesInfo;
 
 using drift::WaveletBuffer;
 using drift::WaveletParameters;
 using drift::WaveletTypes;
 using drift::Signal1D;
-using NoDenoise = drift::ThresholdAbsDenoiseAlgorithm<float>;
+using Denoiser = drift::NullDenoiseAlgorithm<float>;
 
 using google::protobuf::util::TimeUtil;
 using google::protobuf::Any;
@@ -23,7 +23,9 @@ int main() {
     const auto pb_time = TimeUtil::GetCurrentTime();
     std::string message;
 
-    const Signal1D kTimeSeries{0.1, 0.2, 0.5, 0.1, 0.2, 0.1, 0.6, 0.1, 0.1, 0.2};
+    const Signal1D kData = {0, 10., 0.3, 1};
+    const std::vector<std::string> kNames = {"x0", "x1", "x2", "x3"};
+
     {
         // Create a package and serialize it
         DriftPackage original;
@@ -33,31 +35,26 @@ int main() {
         original.mutable_publish_timestamp()->CopyFrom(pb_time);
 
         // Fill meta data
-        TimeSeriesInfo info;
-        info.mutable_start_timestamp()->CopyFrom(pb_time - TimeUtil::SecondsToDuration(1));
-        info.mutable_stop_timestamp()->CopyFrom(pb_time);
-        info.set_size(kTimeSeries.size());
-        info.set_first(kTimeSeries[0]);
-        info.set_last(kTimeSeries[kTimeSeries.size() - 1]);
-        info.set_min(blaze::min(kTimeSeries));
-        info.set_max(blaze::max(kTimeSeries));
-        info.set_min(blaze::min(kTimeSeries));
+        ScalarValuesInfo info;
+        for (const auto &name: kNames) {
+            info.add_variables()->set_name(name);
+        }
 
         MetaInfo meta;
-        meta.set_type(MetaInfo::TIME_SERIES);
-        meta.mutable_time_series_info()->CopyFrom(info);
+        meta.set_type(MetaInfo::SCALAR_VALUES);
+        meta.mutable_scalar_info()->CopyFrom(info);
 
         original.mutable_meta()->CopyFrom(meta);
 
         // Decompose and compress signal
         WaveletBuffer buffer(WaveletParameters{
-                .signal_shape =  {kTimeSeries.size()},
+                .signal_shape =  {kData.size()},
                 .signal_number = 1,
-                .decomposition_steps = 2,
-                .wavelet_type = WaveletTypes::kDB1, // Haar
+                .decomposition_steps = 0,
+                .wavelet_type = WaveletTypes::kNone, // No composition, wavelet buffer is a vector now
         });
 
-        if (!buffer.Decompose(kTimeSeries, NoDenoise(0, 0.1))) {
+        if (!buffer.Decompose(kData, Denoiser())) {
             std::cerr << "Failed decompose the signal";
             return -1;
         }

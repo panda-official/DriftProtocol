@@ -5,7 +5,14 @@ nav:
       - README: README.md
       - For C++: cpp/README.md
       - For Python: python/README.md
-      - Typical Use Cases: docs/use_cases.md
+
+  - C++ Examples:
+      - docs/cpp_examples/drift_package_example.md
+      - docs/cpp_examples/payload_with_image_example.md
+      - docs/cpp_examples/payload_with_timeseries_example.md
+      - docs/cpp_examples/payload_with_scalars_example.md
+      - docs/cpp_examples/trigger_message_example.md
+
   - API Reference:
       - docs/api/common.md
       - docs/api/meta.md
