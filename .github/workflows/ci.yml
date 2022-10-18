@@ -49,7 +49,9 @@ jobs:
         run: pip3 install conan
 
       - name: Build test package
-        run: CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
+        run: |
+          conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
 
       - name: Build examples
         run: |
