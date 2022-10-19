@@ -9,12 +9,12 @@ enum StatusCode {
   UNCERTAIN_SERVICE_BUSY = 0x101; // No errors, but service isn't ready to handle response
 
   BAD = 0x200;                    // Common bad status can be used as a flag
-  BAD_MALFORMED_REQUEST = 0x201;  // Format of the request is wrong
-  BAD_MALFORMED_RESPONSE = 0x202; // Format of the response is wrong
-  BAD_INVALID_ARGUMENT = 0x203;   // The value of the number or arguments in the request is wrong
+  BAD_MALFORMED_REQUEST = 0x201;  // Format of request is wrong
+  BAD_MALFORMED_RESPONSE = 0x202; // Format of response is wrong
+  BAD_INVALID_ARGUMENT = 0x203;   // Value of number or arguments in request is wrong
   BAD_INTERNAL_ERROR = 0x204;     // Input is ok, but a service has internal error and failed to handle it
-  BAD_COMMUNICATION_ERROR = 0x205;// A service failed to reach the data from the input
-  BAD_SOURCE_STATE = 0x206;       // The data source is available but can't provide data
-  BAD_SOURCE_DATA_QUALITY = 0x207;// The data source provides data but the quliaty is bad
+  BAD_COMMUNICATION_ERROR = 0x205;// A service failed to reach data from input
+  BAD_SOURCE_STATE = 0x206;       // Data source is available but can't provide data
+  BAD_SOURCE_DATA_QUALITY = 0x207;// Data source provides data but the quality is bad
   BAD_DATA_READ_TIMEOUT = 0x208;  // We failed to get data from the source for the given timeout
 }

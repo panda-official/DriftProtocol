@@ -4,8 +4,19 @@ on:
     branches: [ master, develop ]
     tags:
       - 'v*'
+    paths-ignore:
+      - python/docs/**
+      - cpp/docs/**
+      - README.md
+      - CHANGELOG.md
+
   pull_request:
     branches: [ master, develop ]
+    paths-ignore:
+      - python/docs/**
+      - cpp/docs/**
+      - README.md
+      - CHANGELOG.md
 
 env:
   CONAN_USER_HOME: /home/runner/
@@ -36,7 +47,7 @@ jobs:
 
   cpp-conan-test:
     needs: [ cpp-build ]
-    name: "Test package with example"
+    name: "Test package with examples"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -49,16 +60,18 @@ jobs:
         run: pip3 install conan
 
       - name: Build test package
-        run: CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable
-
-      - name: Build example
         run: |
-          mkdir example/build
-          cd example/build
+          conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
+
+      - name: Build examples
+        run: |
+          mkdir examples/build
+          cd examples/build
           cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --target all
-      - name: Run example
-        run: ./example/build/bin/drift_protocol_example
+      - name: Run examples
+        run: ./examples/build/bin/drift_package_example
 
   cpp-conan-upload:
     needs: [ cpp-conan-test ]
