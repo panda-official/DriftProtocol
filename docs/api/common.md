@@ -7,14 +7,14 @@ Package: **drift.proto.common**
 A basic package for communication between services in PANDA|Drift infrastructure. All messages in Drift are wrapped into
 it, so that the PANDA|Drift infrastructure can handle and store them.
 
-| Name              | Type                                      | Description                                                                       |
-|-------------------|-------------------------------------------|-----------------------------------------------------------------------------------|
-| id                | int64                                     | Package ID (Unix time in milliseconds)                                            |
-| source_timestamp  | Timestamp                                 | Timestamp when a service has received  an input package                           |
-| publish_timestamp | Timestamp                                 | Timestamp when a service has done its job and sends an output package             |
-| status            | [StatusCode](/docs/api/common#statuscode) | Status of the package. .                                                          |
-| data              | Any[]                                     | An array of any protobuf messages, it may be Drift Payload’s, Trigger Message etc |
-| meta              | [MetaInfo](/docs/api/meta#metainfo)       | See [MetaProtocol](/docs/api/meta)                                                |
+| Name              | Type                               | Description                                                                       |
+|-------------------|------------------------------------|-----------------------------------------------------------------------------------|
+| id                | int64                              | Package ID (Unix time in milliseconds)                                            |
+| source_timestamp  | Timestamp                          | Timestamp when a service has received  an input package                           |
+| publish_timestamp | Timestamp                          | Timestamp when a service has done its job and sends an output package             |
+| status            | [StatusCode](common.md#statuscode) | Status of the package. .                                                          |
+| data              | Any[]                              | An array of any protobuf messages, it may be Drift Payload’s, Trigger Message etc |
+| meta              | [MetaInfo](meta.md#metainfo)       | See [MetaProtocol](meta.md)                                                       |
 
 ## DataPayload
 
@@ -23,7 +23,7 @@ using [WaveletBuffer](https://github.com/panda-official/WaveletBuffer).
 
 | Name  | Type   | Description                                                                                                                                                             |
 |-------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| shape | uint32 | Shape of real data. DEPRECATED  We use [MetaProtocol](/docs/api/meta) to describe shape of data                                                                         |
+| shape | uint32 | Shape of real data. DEPRECATED  We use [MetaProtocol](meta.md) to describe shape of data                                                                                |
 | data  | byte[] | Serialized binary data. It maybe JPEG picture, Wavelet Buffer, JSON string etc.   A service which subscribes on this data should know the format and how to process it. |
 
 ## StatusCode
