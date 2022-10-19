@@ -4,8 +4,19 @@ on:
     branches: [ master, develop ]
     tags:
       - 'v*'
+    paths-ignore:
+      - python/docs/**
+      - cpp/docs/**
+      - README.md
+      - CHANGELOG.md
+
   pull_request:
     branches: [ master, develop ]
+    paths-ignore:
+      - python/docs/**
+      - cpp/docs/**
+      - README.md
+      - CHANGELOG.md
 
 env:
   CONAN_USER_HOME: /home/runner/
