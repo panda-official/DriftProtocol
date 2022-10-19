@@ -14,17 +14,17 @@ it, so that the PANDA|Drift infrastructure can handle and store them.
 | publish_timestamp | Timestamp                                 | Timestamp when a service has done its job and sends an output package             |
 | status            | [StatusCode](/docs/api/common#statuscode) | Status of the package. .                                                          |
 | data              | Any[]                                     | An array of any protobuf messages, it may be Drift Payload’s, Trigger Message etc |
-| meta              | [MetaInfo](/docs/api/meta#metainfo)       | See [MetProtocol](/docs/api/meta)                                                 |
+| meta              | [MetaInfo](/docs/api/meta#metainfo)       | See [MetaProtocol](/docs/api/meta)                                                |
 
 ## DataPayload
 
 DataPayload represents serialized data which a server sends via MQTT. It is usually data denoised and compressed by
 using [WaveletBuffer](https://github.com/panda-official/WaveletBuffer).
 
-| Name  | Type   | Description                                                                                                                                                          |
-|-------|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| shape | uint32 | Shape of real data. DEPRECATED  We use [MetProtocol](/docs/api/meta) to describe shape of data                                                                       |
-| data  | byte[] | ialized binary data. It maybe JPEG picture, Wavelet Buffer, JSON string etc.   A service which subscribes on this data should know the format and how to process it. |
+| Name  | Type   | Description                                                                                                                                                             |
+|-------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| shape | uint32 | Shape of real data. DEPRECATED  We use [MetaProtocol](/docs/api/meta) to describe shape of data                                                                         |
+| data  | byte[] | Serialized binary data. It maybe JPEG picture, Wavelet Buffer, JSON string etc.   A service which subscribes on this data should know the format and how to process it. |
 
 ## StatusCode
 
