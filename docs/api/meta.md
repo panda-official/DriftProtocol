@@ -3,7 +3,7 @@
 Package: **drift.proto.meta**
 
 Additionally to data, Drift Package can contain a message with meta information, which describers the data
-in [DataPayload](/docs/api/common) . For example, if we send a [DataPayload](/docs/api/common) with time-series inside,
+in [DataPayload](common.md) . For example, if we send a [DataPayload](common.md) with time-series inside,
 we can send information about the full size of the signal, time period etc.
 
 The meta information describes the following data types:
@@ -22,15 +22,15 @@ Top-level descriptor which has type of data in Drift Package and a type specific
 |---------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------------------|
 | type                | DataType                                                                 | Enumeration (TIME_SERIES=0, IMAGE=1, SCALAR_VALUES=2, TEXT=3, ALIGNED_PACKAGE=4) |
 | One of filed below: | [oneof](https://developers.google.com/protocol-buffers/docs/proto#oneof) |
-| timeseries_info     | [TimeSeriesInfo](/docs/api/meta#timeseriesinfo)                          |                                                                                  |
-| image_info          | [ImageInfo](/docs/api/meta#imageinfo)                                    |                                                                                  |
-| scalar_info         | [ScalarValuesInfo](/docs/api/meta#scalarvaluesinfo)                      |                                                                                  |
-| text_info           | [TextInfo](/docs/api/meta#textinfo)                                      |                                                                                  |
-| alignment_info      | [AlignmentInfo](/docs/api/meta#alignmentinfo)                            |                                                                                  |
+| timeseries_info     | [TimeSeriesInfo](meta.md#timeseriesinfo)                                 |                                                                                  |
+| image_info          | [ImageInfo](meta.md#imageinfo)                                           |                                                                                  |
+| scalar_info         | [ScalarValuesInfo](meta.md#scalarvaluesinfo)                             |                                                                                  |
+| text_info           | [TextInfo](meta.md#textinfo)                                             |                                                                                  |
+| alignment_info      | [AlignmentInfo](meta.md#alignmentinfo)                                   |                                                                                  |
 
 ## TimeSeriesInfo
 
-TimeSeriesInfo describes time series data inside DriftPackage, which is sent as [DataPayload](/docs/api/common) with
+TimeSeriesInfo describes time series data inside DriftPackage, which is sent as [DataPayload](common.md) with
 a serialized [WaveletBuffer](https://github.com/panda-official/WaveletBuffer).
 
 | Name            | Type      | Description                                         |
