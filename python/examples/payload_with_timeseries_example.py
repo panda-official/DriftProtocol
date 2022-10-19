@@ -14,7 +14,9 @@ if __name__ == "__main__":
     pb_time = Timestamp()
     pb_time.GetCurrentTime()
 
-    SIGNAL = np.array([0.1, 0.2, 0.5, 0.1, 0.2, 0.1, 0.6, 0.1, 0.1, 0.2], dtype=np.float32)
+    SIGNAL = np.array(
+        [0.1, 0.2, 0.5, 0.1, 0.2, 0.1, 0.6, 0.1, 0.1, 0.2], dtype=np.float32
+    )
 
     # Create a package and serialize it
     original = DriftPackage()
@@ -39,8 +41,12 @@ if __name__ == "__main__":
     meta.image_info = info
 
     # Decompose and compress signal
-    buffer = WaveletBuffer(signal_shape=[len(SIGNAL)], signal_number=1, decomposition_steps=2,
-                           wavelet_type=WaveletType.DB1)
+    buffer = WaveletBuffer(
+        signal_shape=[len(SIGNAL)],
+        signal_number=1,
+        decomposition_steps=2,
+        wavelet_type=WaveletType.DB1,
+    )
     buffer.decompose(SIGNAL, denoise.Threshold(0, 0.1))
 
     # Prepare payload
@@ -57,7 +63,9 @@ if __name__ == "__main__":
     # Parse the package
     new_pacakge = DriftPackage()
     new_pacakge.ParseFromString(message)
-    print(f"Package ID={new_pacakge.id} type={MetaInfo.DataType.Name(new_pacakge.meta.type)}")
+    print(
+        f"Package ID={new_pacakge.id} type={MetaInfo.DataType.Name(new_pacakge.meta.type)}"
+    )
 
     payload = DataPayload()
     new_pacakge.data[0].Unpack(payload)

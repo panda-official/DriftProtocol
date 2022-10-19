@@ -14,7 +14,7 @@ if __name__ == "__main__":
     pb_time = Timestamp()
     pb_time.GetCurrentTime()
 
-    DATA = np.array([0, 10., 0.3, 1], dtype=np.float32)
+    DATA = np.array([0, 10.0, 0.3, 1], dtype=np.float32)
     NAMES = ["x0", "x1", "x2", "x3"]
 
     # Create a package and serialize it
@@ -36,8 +36,12 @@ if __name__ == "__main__":
     meta.image_info = info
 
     # Put data in buffer without decomposition and compression
-    buffer = WaveletBuffer(signal_shape=[len(DATA)], signal_number=1, decomposition_steps=0,
-                           wavelet_type=WaveletType.NONE)
+    buffer = WaveletBuffer(
+        signal_shape=[len(DATA)],
+        signal_number=1,
+        decomposition_steps=0,
+        wavelet_type=WaveletType.NONE,
+    )
     buffer.decompose(DATA, denoise.Null())
 
     # Prepare payload
@@ -54,7 +58,9 @@ if __name__ == "__main__":
     # Parse the package
     new_pacakge = DriftPackage()
     new_pacakge.ParseFromString(message)
-    print(f"Package ID={new_pacakge.id} type={MetaInfo.DataType.Name(new_pacakge.meta.type)}")
+    print(
+        f"Package ID={new_pacakge.id} type={MetaInfo.DataType.Name(new_pacakge.meta.type)}"
+    )
 
     payload = DataPayload()
     new_pacakge.data[0].Unpack(payload)

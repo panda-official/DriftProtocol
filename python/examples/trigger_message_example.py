@@ -34,4 +34,6 @@ if __name__ == "__main__":
 
     trigger = IntervalTriggerMessage()
     new_pacakge.data[0].Unpack(trigger)
-    print(f"Trigger interval from from {trigger.start_timestamp.ToDatetime()} to {trigger.stop_timestamp.ToDatetime()}")
+    print(
+        f"Trigger interval from from {trigger.start_timestamp.ToDatetime()} to {trigger.stop_timestamp.ToDatetime()}"
+    )

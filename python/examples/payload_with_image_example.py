@@ -17,10 +17,16 @@ if __name__ == "__main__":
     # Load and decompose image with wavelet image
     WIDTH = 800
     HEIGHT = 500
-    img = WaveletImage(signal_shape=[WIDTH, HEIGHT], signal_number=3, decomposition_steps=3,
-                       wavelet_type=WaveletType.DB3)
+    img = WaveletImage(
+        signal_shape=[WIDTH, HEIGHT],
+        signal_number=3,
+        decomposition_steps=3,
+        wavelet_type=WaveletType.DB3,
+    )
 
-    img.import_from_file(str(IMG_PATH.resolve()), denoiser=denoise.Simple(0.9), codec=RgbJpeg())
+    img.import_from_file(
+        str(IMG_PATH.resolve()), denoiser=denoise.Simple(0.9), codec=RgbJpeg()
+    )
 
     # Create a package and serialize it
     original = DriftPackage()
@@ -38,7 +44,7 @@ if __name__ == "__main__":
 
     meta = MetaInfo
     meta.type = MetaInfo.IMAGE
-    meta.image_info  = image_info
+    meta.image_info = image_info
 
     # Prepare payload
     payload = DataPayload()
@@ -54,7 +60,9 @@ if __name__ == "__main__":
     # Parse the package
     new_pacakge = DriftPackage()
     new_pacakge.ParseFromString(message)
-    print(f"Package ID={new_pacakge.id} type={MetaInfo.DataType.Name(new_pacakge.meta.type)}")
+    print(
+        f"Package ID={new_pacakge.id} type={MetaInfo.DataType.Name(new_pacakge.meta.type)}"
+    )
 
     payload = DataPayload()
     new_pacakge.data[0].Unpack(payload)
