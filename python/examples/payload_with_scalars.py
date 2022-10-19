@@ -35,7 +35,7 @@ if __name__ == "__main__":
     meta.type = MetaInfo.SCALAR_VALUES
     meta.image_info = info
 
-    # Decompose and compress signal
+    # Put data in buffer without decomposition and compression
     buffer = WaveletBuffer(signal_shape=[len(DATA)], signal_number=1, decomposition_steps=0,
                            wavelet_type=WaveletType.NONE)
     buffer.decompose(DATA, denoise.Null())

@@ -46,7 +46,7 @@ int main() {
 
         original.mutable_meta()->CopyFrom(meta);
 
-        // Decompose and compress signal
+        // Put data in buffer without decomposition and compression
         WaveletBuffer buffer(WaveletParameters{
                 .signal_shape =  {kData.size()},
                 .signal_number = 1,

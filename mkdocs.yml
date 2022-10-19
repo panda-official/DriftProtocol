@@ -18,6 +18,7 @@ nav:
       - docs/py_examples/payload_with_image_example.md
       - docs/py_examples/payload_with_timeseries_example.md
       - docs/py_examples/payload_with_scalars_example.md
+      - docs/py_examples/trigger_message_example.md
 
   - API Reference:
       - docs/api/common.md

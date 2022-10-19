@@ -1,7 +1,8 @@
-from drift_protocol.common import DriftPackage, DataPayload, StatusCode
-
-from google.protobuf.timestamp_pb2 import Timestamp
 from google.protobuf.any_pb2 import Any
+from google.protobuf.timestamp_pb2 import Timestamp
+
+from drift_protocol.common import DriftPackage, StatusCode
+from drift_protocol.trigger_service import IntervalTriggerMessage
 
 if __name__ == "__main__":
     pb_time = Timestamp()
@@ -14,12 +15,13 @@ if __name__ == "__main__":
     original.publish_timestamp.CopyFrom(pb_time)
     original.status = StatusCode.GOOD
 
-    # Prepare payload
-    payload = DataPayload()
-    payload.data = b"some data to send"
+    # Trigger message for 1 second interval
+    trigger = IntervalTriggerMessage()
+    trigger.start_timestamp.FromMilliseconds(pb_time.ToMilliseconds() - 1_000_000)
+    trigger.stop_timestamp.CopyFrom(pb_time)
 
     msg = Any()
-    msg.Pack(payload)
+    msg.Pack(trigger)
     original.data.append(msg)
 
     # Serialize package to message
@@ -30,6 +32,6 @@ if __name__ == "__main__":
     new_pacakge.ParseFromString(message)
     print(f"Package ID={new_pacakge.id}")
 
-    payload = DataPayload()
-    new_pacakge.data[0].Unpack(payload)
-    print(f"Data: {payload.data}")
+    trigger = IntervalTriggerMessage()
+    new_pacakge.data[0].Unpack(trigger)
+    print(f"Trigger interval from from {trigger.start_timestamp.ToDatetime()} to {trigger.stop_timestamp.ToDatetime()}")
