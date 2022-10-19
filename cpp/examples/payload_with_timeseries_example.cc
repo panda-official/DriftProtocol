@@ -41,7 +41,7 @@ int main() {
         info.set_last(kTimeSeries[kTimeSeries.size() - 1]);
         info.set_min(blaze::min(kTimeSeries));
         info.set_max(blaze::max(kTimeSeries));
-        info.set_min(blaze::min(kTimeSeries));
+        info.set_mean(blaze::mean(kTimeSeries));
 
         MetaInfo meta;
         meta.set_type(MetaInfo::TIME_SERIES);
