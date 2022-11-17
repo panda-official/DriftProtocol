@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added:
 
 - DRIFT-528: Statistic information about time series, [PR-6](https://github.com/panda-official/DriftProtocol/pull/6)
+- DRIFT-534: Dependencies compatibility table, [PR-9](https://github.com/panda-official/DriftProtocol/pull/9)
 - DRIFT-551: Documentation on RTD, [PR-7](https://github.com/panda-official/DriftProtocol/pull/7)
 
 ### Fixed:
