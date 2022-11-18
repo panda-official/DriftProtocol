@@ -5,6 +5,7 @@ nav:
       - README: README.md
       - For C++: cpp/README.md
       - For Python: python/README.md
+      - Dependencies: docs/dependencies.md
 
   - C++ Examples:
       - docs/cpp_examples/drift_package_example.md

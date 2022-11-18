@@ -7,22 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Added:
+### Added
 
 - DRIFT-528: Statistic information about time series, [PR-6](https://github.com/panda-official/DriftProtocol/pull/6)
+- DRIFT-534: Dependencies compatibility table, [PR-9](https://github.com/panda-official/DriftProtocol/pull/9)
 - DRIFT-551: Documentation on RTD, [PR-7](https://github.com/panda-official/DriftProtocol/pull/7)
 
-### Fixed:
+### Fixed
 
 - Cross-links in docs, [PR-8](https://github.com/panda-official/DriftProtocol/pull/8)
 
 ## 0.2.0 - 2022-08-23
 
-### Fixed:
+### Fixed
 
 - Building conan pkg from source, [PR-2](https://github.com/panda-official/DriftProtocol/pull/2)
 
-### Changed:
+### Changed
 
 - Build for Protobuf 3.12.4. Requires >=3.12.4 <=3.20.1, [PR-3](https://github.com/panda-official/DriftProtocol/pull/5)
 
