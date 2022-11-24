@@ -3,6 +3,7 @@ syntax = "proto3";
 package drift.proto.meta;
 
 import "google/protobuf/timestamp.proto";
+import "drift_protocol/common/status_code.proto";
 
 // Descriptor of data in DriftPackage
 message MetaInfo {
@@ -52,6 +53,7 @@ message ScalarValuesInfo {
   repeated VariableInfo variables = 1; // FIXME: ??? not sure variables is a good name
   message VariableInfo {
     string name = 1;  // name of scalar value
+    common.StatusCode status = 2;  // status of scalar value
   }
 }
 
