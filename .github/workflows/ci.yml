@@ -80,7 +80,7 @@ jobs:
     defaults:
       run:
         working-directory: ./cpp
-    #if: ${{ (github.ref == 'refs/heads/develop') || (startsWith(github.event.ref, 'refs/tags/v')) }}
+    if: ${{ (github.ref == 'refs/heads/develop') || (startsWith(github.event.ref, 'refs/tags/v')) }}
 
     steps:
       - uses: actions/checkout@v2
