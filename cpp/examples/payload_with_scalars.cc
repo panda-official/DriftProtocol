@@ -37,7 +37,9 @@ int main() {
         // Fill meta data
         ScalarValuesInfo info;
         for (const auto &name: kNames) {
-            info.add_variables()->set_name(name);
+            auto var = info.add_variables();
+            var->set_name(name);
+            var->set_status(StatusCode::GOOD);
         }
 
         MetaInfo meta;

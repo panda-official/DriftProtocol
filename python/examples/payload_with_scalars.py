@@ -29,6 +29,7 @@ if __name__ == "__main__":
     for name in NAMES:
         var = ScalarValuesInfo.VariableInfo()
         var.name = name
+        var.status = StatusCode.GOOD
         info.variables.append(var)
 
     meta = MetaInfo
