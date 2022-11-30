@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - DRIFT-534: Dependencies compatibility table, [PR-9](https://github.com/panda-official/DriftProtocol/pull/9)
 - DRIFT-551: Documentation on RTD, [PR-7](https://github.com/panda-official/DriftProtocol/pull/7)
 - DRIFT-615: add status for each scalar variable, [PR-10](https://github.com/panda-official/DriftProtocol/pull/10)
+- DRIFT-617: Add conan packgae compilation for armv8, [PR-11](https://github.com/panda-official/DriftProtocol/pull/11/)
 
 ### Fixed
 

@@ -90,6 +90,9 @@ jobs:
       - name: Install conan
         run: pip3 install conan
 
+      - name: Install compiler toolkit
+        run: sudo apt-get install g++-aarch64-linux-gnu
+
       - name: Prefix version for development version
         if: ${{ (github.ref == 'refs/heads/develop') }}
         run: echo "VERSION_SUFFIX=$(echo ${GITHUB_RUN_ID})" >> $GITHUB_ENV
@@ -98,12 +101,19 @@ jobs:
         run: |
           conan profile new default --detect
           conan profile update settings.compiler.libcxx=libstdc++11 default
+
       - name: Build package for stable channel
         if: github.ref_type == 'tag'
-        run: CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable
+        run: |
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable --build=missing -pr:b=default -pr:h=./linux_armv8 -tf=None
+
       - name: Build package for develop channel
         if: github.ref_type == 'branch'
-        run: CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
+        run: |
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop --build=missing -pr:b=default -pr:h=./linux_armv8 -tf=None
+
       - name: Upload package
         run: |
           conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
