@@ -62,7 +62,7 @@ jobs:
       - name: Build test package
         run: |
           conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
-          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop --build=missing
 
       - name: Build examples
         run: |
