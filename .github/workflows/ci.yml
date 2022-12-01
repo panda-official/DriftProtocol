@@ -175,9 +175,11 @@ jobs:
 
       - uses: ./.github/actions/install-pkg
 
-      - name: Run Pylint
+      - name: Run Pylint for tests
         run: pylint  tests/
 
+      - name: Run Pylint for examples
+        run: pylint  examples/
 
   py-test:
     name: "Test PIP package"
@@ -190,14 +192,24 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
-      - uses: ./.github/actions/download-protoc
-
       - uses: ./.github/actions/install-pkg
-
       - name: Run Pytest
         run: pytest tests/
 
+  py-test-examples:
+    name: "Test PIP package"
+    needs: [ py-pip ]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./python
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/install-pkg
+      - name: Run Examples
+        run: find examples/ -name "*.py" -exec python {} \;
 
   py-pip-upload:
     name: Upload if release
