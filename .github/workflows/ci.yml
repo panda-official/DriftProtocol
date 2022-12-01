@@ -71,7 +71,7 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --target all
       - name: Run examples
-        run:  find ./examples/build/bin/ -type f -executable | xargs
+        run:  find examples/build/bin/  -type f -executable -print0 | xargs -n 1 -0 nice
 
   cpp-conan-upload:
     needs: [ cpp-conan-test ]
@@ -175,8 +175,6 @@ jobs:
       - uses: ./.github/actions/install-pkg
       - name: Run Pylint for tests
         run: pylint  tests/
-      - name: Run Pylint for examples
-        run: pylint  examples/
 
   py-test:
     name: "Test PIP package"
@@ -206,8 +204,10 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/install-pkg
+      - name: Install example dependencies
+        run: pip3 install -r examples/requirements.txt
       - name: Run Examples
-        run: find examples -name "*.py" | xargs python3
+        run: find examples/ -name "*.py" -print0  | xargs -n 1 -0 python3
 
   py-pip-upload:
     name: Upload if release
