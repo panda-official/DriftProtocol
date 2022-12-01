@@ -57,12 +57,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install conan
-        run: pip3 install conan
+        run: pipx install conan
+
+      - name: Create profile
+        run: |
+          conan profile new default --detect
+          conan profile update settings.compiler.libcxx=libstdc++11 default
 
       - name: Build test package
         run: |
           conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
-          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop --build=missing
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
 
       - name: Build examples
         run: |
