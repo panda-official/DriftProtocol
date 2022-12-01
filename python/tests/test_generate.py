@@ -12,6 +12,7 @@ from python_tools import generate_proto, PROTO_SPEC_FOLDER
 def test__generate_proto_for_all_protofiles(tmp_path):
     """All proto-files must be generated without errors"""
     now = time()
+    sleep(1)
     for proto_filename in PROTO_SPEC_FOLDER.glob("**/*.proto"):
         proto_filename = proto_filename.relative_to(PROTO_SPEC_FOLDER)
         out_filename = generate_proto(str(proto_filename), dest=str(tmp_path))
