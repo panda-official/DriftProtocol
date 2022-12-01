@@ -62,11 +62,13 @@ ScalarValuesInfo describes scalar values inside DriftPackage which is sent
 as a [WaveletBuffer](https://github.com/panda-official/WaveletBuffer) without any decomposition.
 This type of data is used when we have some samples as intentioned parameters from a data source.
 
-| Name          | Type        | Description                                        |
-|---------------|-------------|----------------------------------------------------|
-| variables     | ValueInfo[] | Description for each scalar value in WaveletBuffer |
-| **ValueInfo** |             |                                                    |
-| name          | string      | Name of variable                                   |
+| Name          | Type                               | Description                                        |
+|---------------|------------------------------------|----------------------------------------------------|
+| variables     | ValueInfo[]                        | Description for each scalar value in WaveletBuffer |
+| **ValueInfo** |                                    |                                                    |
+| name          | string                             | Name of variable                                   |
+| status        | [StatusCode](common.md#statuscode) | Status of variable                                 |
+
 
 ## TextInfo
 

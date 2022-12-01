@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.3.0 - 2020-11-30
+
 ### Added
 
 - DRIFT-528: Statistic information about time series, [PR-6](https://github.com/panda-official/DriftProtocol/pull/6)
