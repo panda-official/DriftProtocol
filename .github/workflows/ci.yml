@@ -78,9 +78,8 @@ jobs:
       - name: Run examples
         run: ./examples/build/bin/drift_package_example
 
-
   cpp-conan-upload:
-    needs: [ cpp-conan-test ]
+    #    needs: [ cpp-conan-test ]
     name: "Build and upload conan package"
     runs-on: ubuntu-latest
     defaults:
@@ -95,7 +94,7 @@ jobs:
             conan_tail: ""
           - arch: armv8
             dep_install_cmd: "sudo apt-get install g++-aarch64-linux-gnu"
-            conan_tail: "-pr:b default -pr:h ./linux_armv8 -tf=None"
+            conan_tail: "-pr:b=default -pr:h=./linux_armv8 -tf=None"
     steps:
       - uses: actions/checkout@v2
         with:
