@@ -71,7 +71,7 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --target all
       - name: Run examples
-        run:  find ./examples/build/bin/ -type f -executable -exec {} \;
+        run:  find ./examples/build/bin/ -type f -executable | xargs
 
   cpp-conan-upload:
     needs: [ cpp-conan-test ]
@@ -172,12 +172,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
       - uses: ./.github/actions/install-pkg
-
       - name: Run Pylint for tests
         run: pylint  tests/
-
       - name: Run Pylint for examples
         run: pylint  examples/
 
@@ -192,12 +189,13 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - uses: ./.github/actions/download-protoc
       - uses: ./.github/actions/install-pkg
       - name: Run Pytest
         run: pytest tests/
 
   py-test-examples:
-    name: "Test PIP package"
+    name: "Test Examples"
     needs: [ py-pip ]
     runs-on: ubuntu-latest
     defaults:
@@ -209,11 +207,11 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/install-pkg
       - name: Run Examples
-        run: find examples/ -name "*.py" -exec python {} \;
+        run: find examples -name "*.py" | xargs python3
 
   py-pip-upload:
     name: Upload if release
-    needs: [ py-test, py-lint, py-pip ]
+    needs: [ py-test, py-lint, py-pip, py-test-examples ]
     runs-on: ubuntu-latest
     defaults:
       run:
