@@ -79,7 +79,7 @@ jobs:
         run: ./examples/build/bin/drift_package_example
 
   cpp-conan-upload:
-    #    needs: [ cpp-conan-test ]
+    needs: [ cpp-conan-test ]
     name: "Build and upload conan package"
     runs-on: ubuntu-latest
     defaults:
