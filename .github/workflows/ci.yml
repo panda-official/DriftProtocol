@@ -104,6 +104,11 @@ jobs:
       - name: Install conan
         run: pip3 install conan
 
+      - name: Setup panda remote
+        run: |
+          conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
+          conan user -p ${{secrets.CONAN_PASSWORD}} -r panda --skip-auth ${{secrets.CONAN_LOGIN_USERNAME}}
+
       - name: Install compiler toolkit
         run: ${{ matrix.dep_install_cmd }}
 
@@ -127,10 +132,7 @@ jobs:
           CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop --build=missing ${{ matrix.conan_tail }}
 
       - name: Upload package
-        run: |
-          conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
-          conan user -p ${{secrets.CONAN_PASSWORD}} -r panda --skip-auth ${{secrets.CONAN_LOGIN_USERNAME}}
-          conan upload drift_protocol --all --confirm --remote=panda
+        run:  conan upload drift_protocol --all --confirm --remote=panda
 
   py-format:
     runs-on: ubuntu-latest
