@@ -57,7 +57,12 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install conan
-        run: pip3 install conan
+        run: pipx install conan
+
+      - name: Create profile
+        run: |
+          conan profile new default --detect
+          conan profile update settings.compiler.libcxx=libstdc++11 default
 
       - name: Build test package
         run: |
@@ -80,8 +85,16 @@ jobs:
     defaults:
       run:
         working-directory: ./cpp
-    if: ${{ (github.ref == 'refs/heads/develop') || (startsWith(github.event.ref, 'refs/tags/v')) }}
-
+    strategy:
+      matrix:
+        arch: [x86_64, armv8]
+        include:
+          - arch: x86_64
+            dep_install_cmd: ""
+            conan_tail: ""
+          - arch: armv8
+            dep_install_cmd: "sudo apt-get install g++-aarch64-linux-gnu"
+            conan_tail: "-pr:b=default -pr:h=./linux_armv8 -tf=None"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -89,6 +102,14 @@ jobs:
 
       - name: Install conan
         run: pip3 install conan
+
+      - name: Setup panda remote
+        run: |
+          conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
+          conan user -p ${{secrets.CONAN_PASSWORD}} -r panda --skip-auth ${{secrets.CONAN_LOGIN_USERNAME}}
+
+      - name: Install compiler toolkit
+        run: ${{ matrix.dep_install_cmd }}
 
       - name: Prefix version for development version
         if: ${{ (github.ref == 'refs/heads/develop') }}
@@ -98,17 +119,19 @@ jobs:
         run: |
           conan profile new default --detect
           conan profile update settings.compiler.libcxx=libstdc++11 default
+
       - name: Build package for stable channel
         if: github.ref_type == 'tag'
-        run: CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable
+        run: |
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable --build=missing ${{ matrix.conan_tail }}
+
       - name: Build package for develop channel
         if: github.ref_type == 'branch'
-        run: CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
-      - name: Upload package
         run: |
-          conan remote add panda https://conan.panda.technology/artifactory/api/conan/drift
-          conan user -p ${{secrets.CONAN_PASSWORD}} -r panda --skip-auth ${{secrets.CONAN_LOGIN_USERNAME}}
-          conan upload drift_protocol --all --confirm --remote=panda
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop --build=missing ${{ matrix.conan_tail }}
+
+      - name: Upload package
+        run:  conan upload drift_protocol --all --confirm --remote=panda
 
   py-format:
     runs-on: ubuntu-latest
