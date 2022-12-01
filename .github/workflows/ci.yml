@@ -73,6 +73,7 @@ jobs:
       - name: Run examples
         run: ./examples/build/bin/drift_package_example
 
+
   cpp-conan-upload:
     needs: [ cpp-conan-test ]
     name: "Build and upload conan package"
@@ -80,8 +81,16 @@ jobs:
     defaults:
       run:
         working-directory: ./cpp
-    if: ${{ (github.ref == 'refs/heads/develop') || (startsWith(github.event.ref, 'refs/tags/v')) }}
-
+    strategy:
+      matrix:
+        arch: [x86_64, armv8]
+        include:
+          - arch: x86_64
+            dep_install_cmd: ""
+            conan_tail: ""
+          - arch: armv8
+            dep_install_cmd: "sudo apt-get install g++-aarch64-linux-gnu"
+            conan_tail: "-pr:b default -pr:h ./linux_armv8 -tf=None"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -91,7 +100,7 @@ jobs:
         run: pip3 install conan
 
       - name: Install compiler toolkit
-        run: sudo apt-get install g++-aarch64-linux-gnu
+        run: ${{ matrix.dep_install_cmd }}
 
       - name: Prefix version for development version
         if: ${{ (github.ref == 'refs/heads/develop') }}
@@ -105,14 +114,12 @@ jobs:
       - name: Build package for stable channel
         if: github.ref_type == 'tag'
         run: |
-          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable
-          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable --build=missing -pr:b=default -pr:h=./linux_armv8 -tf=None
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/stable --build=missing ${{ matrix.conan_tail }}
 
       - name: Build package for develop channel
         if: github.ref_type == 'branch'
         run: |
-          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop
-          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop --build=missing -pr:b=default -pr:h=./linux_armv8 -tf=None
+          CONAN_SOURCE_DIR=`pwd`/.. conan create . drift/develop --build=missing ${{ matrix.conan_tail }}
 
       - name: Upload package
         run: |
