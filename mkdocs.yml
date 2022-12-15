@@ -30,8 +30,6 @@ repo_name: panda-official/DriftProtocol
 repo_url: https://github.com/panda-official/DriftProtocol
 edit_uri: edit/develop/docs
 
-extra:
-  homepage: https://panda.technology
 # Configuration
 theme:
   name: material
