@@ -29,11 +29,11 @@ class DriftFrameworkConan(ConanFile):
             del self.options.fPIC
 
     def source(self):
-        local_source = os.getenv("CONAN_SOURCE_DIR")
+        local_source = os.getenv("CONAN_DP_SOURCE_DIR")
         if local_source is not None:
             self.run(
                 "cp %s -r %s"
-                % (os.getenv("CONAN_SOURCE_DIR"), f"{self.source_folder}/{self.name}")
+                % (os.getenv("CONAN_DP_SOURCE_DIR"), f"{self.source_folder}/{self.name}")
             )
         else:
             branch = f"v{self.version}" if self.channel == "stable" else self.channel
