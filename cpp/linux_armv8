@@ -4,13 +4,13 @@ os_build=Linux
 arch=armv8
 arch_build=x86_64
 compiler=gcc
-compiler.version=9
+compiler.version=11
 compiler.libcxx=libstdc++
 build_type=Release
 [options]
 [build_requires]
 [env]
 [buildenv]
-CC=aarch64-linux-gnu-gcc-9
-CXX=aarch64-linux-gnu-g++-9
+CC=aarch64-linux-gnu-gcc-11
+CXX=aarch64-linux-gnu-g++-11
 LD=aarch64-linux-gnu-ld
