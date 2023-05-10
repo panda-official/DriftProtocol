@@ -28,7 +28,7 @@ nav:
 
 repo_name: panda-official/DriftProtocol
 repo_url: https://github.com/panda-official/DriftProtocol
-edit_uri: edit/develop/docs
+edit_uri: edit/develop/
 
 # Configuration
 theme:
