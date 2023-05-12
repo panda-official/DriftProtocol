@@ -42,9 +42,8 @@ if __name__ == "__main__":
     image_info.height = HEIGHT
     image_info.channel_layout = "RGB"
 
-    meta = MetaInfo
-    meta.type = MetaInfo.IMAGE
-    meta.image_info = image_info
+    original.mata.type = MetaInfo.IMAGE
+    original.meta.time_series_info.CopyFrom(image_info)
 
     # Prepare payload
     payload = DataPayload()

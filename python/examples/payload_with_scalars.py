@@ -32,9 +32,8 @@ if __name__ == "__main__":
         var.status = StatusCode.GOOD
         info.variables.append(var)
 
-    meta = MetaInfo
-    meta.type = MetaInfo.SCALAR_VALUES
-    meta.image_info = info
+    original.meta.type = MetaInfo.SCALAR_VALUES
+    original.scalar_info.CopyFrom(info)
 
     # Put data in buffer without decomposition and compression
     buffer = WaveletBuffer(
