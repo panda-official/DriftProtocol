@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - DRIFT-626: Run examples in pipelines, [PR-13](https://github.com/panda-official/DriftProtocol/pull/13)
 - DRIFT-601: Update diagram and README, [PR-14](https://github.com/panda-official/DriftProtocol/pull/14)
 
+### Fixed
+
+- HOTFIX: GitHub
+
 ## 0.3.0 - 2020-11-30
 
 ### Added

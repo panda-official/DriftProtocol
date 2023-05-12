@@ -69,7 +69,6 @@ This type of data is used when we have some samples as intentioned parameters fr
 | name          | string                             | Name of variable                                   |
 | status        | [StatusCode](common.md#statuscode) | Status of variable                                 |
 
-
 ## TextInfo
 
 ScalarValuesInfo describes a text data like JSON, XML etc.
@@ -83,8 +82,9 @@ ScalarValuesInfo describes a text data like JSON, XML etc.
 AlignmentInfo describes a special case, when we send a few Drift packages with the same ID but from
 different MQTT topics.
 
-| Name            | Type          | Description                                               |
-|-----------------|---------------|-----------------------------------------------------------|
-| packages        | PackageInfo[] | Description for each aligned package value in DataPayload |
-| **PackageInfo** |               |                                                           |
-| topic           | string        | Name of source topic                                      |
+| Name            | Type                         | Description                                               |
+|-----------------|------------------------------|-----------------------------------------------------------|
+| packages        | PackageInfo[]                | Description for each aligned package value in DataPayload |
+| **PackageInfo** |                              |                                                           |
+| topic           | string                       | Name of source topic                                      |
+| meta            | [MetaInfo](meta.md#metainfo) | Meta information for the package                          |

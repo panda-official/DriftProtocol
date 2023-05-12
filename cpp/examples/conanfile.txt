@@ -1,7 +1,7 @@
 [requires]
 
 drift_protocol/[>=0.2.0-b, loose=False, include_prerelease=True]@drift/develop
-wavelet_buffer/[<1.0]@drift/stable
+wavelet_buffer/0.6.0@drift/stable
 
 [generators]
 cmake

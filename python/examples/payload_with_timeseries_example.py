@@ -36,9 +36,8 @@ if __name__ == "__main__":
     info.max = np.max(SIGNAL)
     info.mean = np.mean(SIGNAL)
 
-    meta = MetaInfo
-    meta.type = MetaInfo.TIME_SERIES
-    meta.image_info = info
+    original.meta.type = MetaInfo.TIME_SERIES
+    original.meta.time_series_info.CopyFrom(info)
 
     # Decompose and compress signal
     buffer = WaveletBuffer(
