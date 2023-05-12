@@ -21,6 +21,7 @@ on:
 env:
   CONAN_USER_HOME: /home/runner/
   PROTOC: ./bin/protoc
+  CONAN_VERSION: 1.59.0
 
 
 jobs:
@@ -36,7 +37,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install conan
-        run: pip3 install conan
+        run: pip3 install conan~=${CONAN_VERSION}
 
       - name: Build package
         run: |
@@ -57,7 +58,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install conan
-        run: pipx install conan
+        run: pip3 install conan~=${CONAN_VERSION}
 
       - name: Create profile
         run: |
@@ -101,7 +102,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install conan
-        run: pip3 install conan
+        run: pip3 install conan~=${CONAN_VERSION}
 
       - name: Setup panda remote
         run: |
