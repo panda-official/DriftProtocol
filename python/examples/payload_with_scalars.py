@@ -33,7 +33,7 @@ if __name__ == "__main__":
         info.variables.append(var)
 
     original.meta.type = MetaInfo.SCALAR_VALUES
-    original.scalar_info.CopyFrom(info)
+    original.meta.scalar_info.CopyFrom(info)
 
     # Put data in buffer without decomposition and compression
     buffer = WaveletBuffer(
