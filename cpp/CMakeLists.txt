@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(drift_protocol VERSION 0.3.0)
+project(drift_protocol VERSION 0.4.0)
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_MODULE_PATH cmake)

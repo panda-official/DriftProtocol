@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### 0.4.0 - 2023-05-17
+
 ### Added
 
 - DRIFT-617: Conan packgae compilation for armv8, conan test_package [PR-11](https://github.com/panda-official/DriftProtocol/pull/11/)
@@ -17,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - DRIFT-626: Run examples in pipelines, [PR-13](https://github.com/panda-official/DriftProtocol/pull/13)
 - DRIFT-601: Update diagram and README, [PR-14](https://github.com/panda-official/DriftProtocol/pull/14)
 
-## 0.3.0 - 2020-11-30
+## 0.3.0 - 2022-11-30
 
 ### Added
 
