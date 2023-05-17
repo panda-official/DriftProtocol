@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - DRIFT-617: Conan packgae compilation for armv8, conan test_package [PR-11](https://github.com/panda-official/DriftProtocol/pull/11/)
+- Labels, [PR-17](https://github.com/panda-official/DriftProtocol/pull/17)
 
 ### Changed
 
