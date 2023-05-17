@@ -14,7 +14,8 @@ it, so that the PANDA|Drift infrastructure can handle and store them.
 | publish_timestamp | Timestamp                          | Timestamp when a service has done its job and sends an output package             |
 | status            | [StatusCode](common.md#statuscode) | Status of the package. .                                                          |
 | data              | Any[]                              | An array of any protobuf messages, it may be Drift Payload’s, Trigger Message etc |
-| meta              | [MetaInfo](meta.md#metainfo)       | See [MetaProtocol](meta.md)                                                       |
+| meta              | [MetaInfo](meta.md#metainfo)       | Meta information about sent data. See [MetaProtocol](meta.md)                     |
+| labels            | Label[]                            | Labels of the package as key-values                                               |
 
 ## DataPayload
 

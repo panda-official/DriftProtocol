@@ -9,10 +9,16 @@ import "drift_protocol/meta/meta_info.proto";
 
 // A basic package for communication between services
 message DriftPackage {
+  message Label {
+    string key = 1;
+    string value = 2;
+  }
+
   int64 id = 1; // package id
   google.protobuf.Timestamp source_timestamp = 2; // source timestamp
   google.protobuf.Timestamp publish_timestamp = 3; // publish timestamp
   StatusCode status = 4; // status of data
   repeated google.protobuf.Any data = 5; // data
   meta.MetaInfo meta = 6; //meta information
+  repeated Label labels = 7; // labels
 }
