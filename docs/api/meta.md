@@ -27,6 +27,7 @@ Top-level descriptor which has type of data in Drift Package and a type specific
 | scalar_info         | [ScalarValuesInfo](meta.md#scalarvaluesinfo)                             |                                                                                  |
 | text_info           | [TextInfo](meta.md#textinfo)                                             |                                                                                  |
 | alignment_info      | [AlignmentInfo](meta.md#alignmentinfo)                                   |                                                                                  |
+| wavelet_buffer_info | [WaveletBufferInfo](meta.md#waveletbufferinfo)                           | Information about wavelet transformation and compression if used                 |
 
 ## TimeSeriesInfo
 
@@ -88,3 +89,43 @@ different MQTT topics.
 | **PackageInfo** |                              |                                                           |
 | topic           | string                       | Name of source topic                                      |
 | meta            | [MetaInfo](meta.md#metainfo) | Meta information for the package                          |
+
+## WaveletBufferInfo
+
+WaveletBufferInfo describes a wavelet transformation and compression parameters if they were applied to the data.
+
+| Name                | Type                                             | Description                                                                                      |
+|---------------------|--------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| abi_version         | uint32                                           | ABI version of the WaveletBuffer library                                                         |
+| wavelet_type        | uint32                                           | Wavelet type 0-no wavelet transformation, 1-DB1, 2-DB2 etc.                                      |
+| decomposition_steps | uint32                                           | Number of decomposition steps applied to the data                                                |
+| compression_level   | uint32                                           | Compression level applied to the data, 0 - no compression, 1-float is 2bit, 2-float is 3bit etc. |
+| no_denoising        | [NoDenoising](meta.md#nodenoising)               | If initialized, no denoising was applied to the data.                                            |
+| threshold_denoising | [ThresholdDenoising](meta.md#thresholddenoising) | If initialized, threshold denoising was applied to the data.                                     |
+| partial_denoising   | [PartialDenoising](meta.md#partialdenoising)     | If initialized, partial denoising was applied to the data.                                       |
+
+## NoDenoising
+
+No denoising was applied to the data.
+
+| Name | Type | Description |
+|------|------|-------------|
+
+## ThresholdDenoising
+
+A denoising method that uses a threshold to remove small coefficients. The threshold is calculated as a linear function
+a*x+b,
+where x is the step of decomposition.
+
+| Name | Type  | Description |
+|------|-------|-------------|
+| a    | float | float       |  
+| b    | float | float       |
+
+## PartialDenoising
+
+A denoising method that removes a part of coefficients
+
+| Name    | Type  | Description                                          |
+|---------|-------|------------------------------------------------------|
+| partial | float | part of coefficients to remove 1.0 - all, 0.0 - none |

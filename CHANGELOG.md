@@ -7,11 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### 0.4.0 - 2023-05-17
+### Added
+
+- DRIFT-680: Add information about wavelet transformation and compression into Drfit
+  Meta, [PR-15](https://github.com/panda-official/DriftProtocol/pull/15)
+
+## 0.4.0 - 2023-05-17
 
 ### Added
 
-- DRIFT-617: Conan packgae compilation for armv8, conan test_package [PR-11](https://github.com/panda-official/DriftProtocol/pull/11/)
+- DRIFT-617: Conan packgae compilation for armv8, conan
+  test_package [PR-11](https://github.com/panda-official/DriftProtocol/pull/11/)
 - Labels, [PR-17](https://github.com/panda-official/DriftProtocol/pull/17)
 
 ### Changed

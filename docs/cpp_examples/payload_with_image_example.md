@@ -5,5 +5,5 @@ with [WaveletBuffer](https://github.com/panda-official/WaveletBuffer) and build 
 [meta information](../api/meta.md) in C++.
 
 ```cpp title="cpp/examples/payload_with_image_example.cc"
---8<-- "../cpp/examples/payload_with_image_example.cc"
+--8<--"../cpp/examples/payload_with_image_example.cc"
 ```

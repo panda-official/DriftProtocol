@@ -5,18 +5,38 @@ package drift.proto.meta;
 import "google/protobuf/timestamp.proto";
 import "drift_protocol/common/status_code.proto";
 
-// Descriptor of data in DriftPackage
-message MetaInfo {
-  DataType type = 1;
 
-  oneof info {  // type specific structures
-    TimeSeriesInfo time_series_info = 2;
-    ImageInfo image_info = 3;
-    ScalarValuesInfo scalar_info = 4;
-    TextInfo text_info = 5;
-    AlignmentInfo alignment_info = 6;
+message WaveletBufferInfo {
+  message NoDenoising {
   }
 
+  // ThresholdDenoising is a denoising method that uses a threshold to remove
+  // small coefficients. The threshold is calculated as a linear function a*x+b,
+  // where x is the step of decomposition.
+  message ThresholdDenoising {
+    float a = 1;
+    float b = 2;
+  }
+
+  // PartialDenoising is a denoising method that removes a part of coefficients
+  message PartialDenoising {
+    float partial = 1; /// part of coefficients to remove 1.0 - all, 0.0 - none
+  }
+
+  uint32 abi_version = 1;  // version of compression algorithm
+  uint32 wavelet_type = 2;  // type of wavelet used for compression
+  uint32 decomposition_steps = 3;  // number of decomposition steps
+  uint32 compression_level = 4;  // compression level
+  oneof denoising {
+    NoDenoising no_denoising = 15;
+    ThresholdDenoising threshold_denoising = 16;
+    PartialDenoising partial_denoising = 17;
+  }
+}
+
+
+// Descriptor of data in DriftPackage
+message MetaInfo {
   enum DataType {
     TIME_SERIES = 0;
     IMAGE = 1;
@@ -24,6 +44,18 @@ message MetaInfo {
     TEXT = 3;
     ALIGNED_PACKAGE = 4;
   }
+
+  DataType type = 1;
+
+  oneof info {// type specific structures
+    TimeSeriesInfo time_series_info = 2;
+    ImageInfo image_info = 3;
+    ScalarValuesInfo scalar_info = 4;
+    TextInfo text_info = 5;
+    AlignmentInfo alignment_info = 6;
+  }
+
+  WaveletBufferInfo wavelet_buffer_info = 7; // info about wavelet transformation and compression if used
 }
 
 message TimeSeriesInfo {
