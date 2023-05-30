@@ -94,7 +94,7 @@ jobs:
             dep_install_cmd: ""
             conan_tail: ""
           - arch: armv8
-            dep_install_cmd: "sudo apt-get update && apt-get install g++-aarch64-linux-gnu"
+            dep_install_cmd: "sudo apt-get update && sudo apt-get install g++-aarch64-linux-gnu"
             conan_tail: "-pr:b=default -pr:h=./linux_armv8 -tf=None"
     steps:
       - uses: actions/checkout@v2
