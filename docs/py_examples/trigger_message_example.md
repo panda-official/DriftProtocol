@@ -4,5 +4,5 @@ Here you can see how to build a [Drift Package](../api/common.md) with [a trigge
 time interval in Python.
 
 ```py title="python/examples/trigger_message_example.py"
---8<-- "../python/examples/trigger_message_example.py"
+--8<--"../python/examples/trigger_message_example.py"
 ```
