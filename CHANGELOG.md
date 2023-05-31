@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- DRIFT-680: Add information about wavelet transformation and compression into Drfit
+- DRIFT-680: Add information about wavelet transformation and compression into Drift
   Meta, [PR-15](https://github.com/panda-official/DriftProtocol/pull/15)
 
 ## 0.4.0 - 2023-05-17
