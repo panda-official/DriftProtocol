@@ -94,15 +94,15 @@ different MQTT topics.
 
 WaveletBufferInfo describes a wavelet transformation and compression parameters if they were applied to the data.
 
-| Name                | Type                                             | Description                                                                                      |
-|---------------------|--------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| abi_version         | uint32                                           | ABI version of the WaveletBuffer library                                                         |
-| wavelet_type        | uint32                                           | Wavelet type 0-no wavelet transformation, 1-DB1, 2-DB2 etc.                                      |
-| decomposition_steps | uint32                                           | Number of decomposition steps applied to the data                                                |
-| compression_level   | uint32                                           | Compression level applied to the data, 0 - no compression, 1-float is 2bit, 2-float is 3bit etc. |
-| no_denoising        | [NoDenoising](meta.md#nodenoising)               | If initialized, no denoising was applied to the data.                                            |
-| threshold_denoising | [ThresholdDenoising](meta.md#thresholddenoising) | If initialized, threshold denoising was applied to the data.                                     |
-| partial_denoising   | [PartialDenoising](meta.md#partialdenoising)     | If initialized, partial denoising was applied to the data.                                       |
+| Name                | Type                                             | Description                                                                                            |
+|---------------------|--------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| abi_version         | uint32                                           | ABI version of the WaveletBuffer library                                                               |
+| wavelet_type        | uint32                                           | Wavelet type 0-no wavelet transformation, 1-DB1, 2-DB2 etc.                                            |
+| decomposition_steps | uint32                                           | Number of decomposition steps applied to the data                                                      |
+| float_compression   | uint32                                           | Float compression level applied to the data, 0 - no compression, 1-float is 2bit, 2-float is 3bit etc. |
+| no_denoising        | [NoDenoising](meta.md#nodenoising)               | If initialized, no denoising was applied to the data.                                                  |
+| threshold_denoising | [ThresholdDenoising](meta.md#thresholddenoising) | If initialized, threshold denoising was applied to the data.                                           |
+| partial_denoising   | [PartialDenoising](meta.md#partialdenoising)     | If initialized, partial denoising was applied to the data.                                             |
 
 ## NoDenoising
 

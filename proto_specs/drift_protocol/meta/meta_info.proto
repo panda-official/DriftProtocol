@@ -26,7 +26,7 @@ message WaveletBufferInfo {
   uint32 abi_version = 1;  // version of compression algorithm
   uint32 wavelet_type = 2;  // type of wavelet used for compression
   uint32 decomposition_steps = 3;  // number of decomposition steps
-  uint32 compression_level = 4;  // compression level
+  uint32 float_compression = 4;  // float compression, 0-none, 1-32bit, 2-31bit, 3-30bit etc
   oneof denoising {
     NoDenoising no_denoising = 15;
     ThresholdDenoising threshold_denoising = 16;
