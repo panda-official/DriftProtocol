@@ -5,5 +5,5 @@ with [WaveletBuffer](https://github.com/panda-official/WaveletBuffer) and build 
 [meta information](../api/meta.md) in Python.
 
 ```py title="python/examples/payload_with_image_example.py"
---8<--"../python/examples/payload_with_image_example.py"
+--8<-- "./python/examples/payload_with_image_example.py"
 ```

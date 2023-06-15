@@ -4,5 +4,5 @@ Here you can see how to build a [Drift Package](../api/common.md) with [a trigge
 time interval in C++.
 
 ```cpp title="cpp/examples/trigger_message_example.cc"
---8<--"../cpp/examples/trigger_message_example.cc"
+--8<-- "./cpp/examples/trigger_message_example.cc"
 ```
