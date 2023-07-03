@@ -43,6 +43,7 @@ message MetaInfo {
     SCALAR_VALUES = 2;
     TEXT = 3;
     ALIGNED_PACKAGE = 4;
+    TYPED_DATA = 5;
   }
 
   DataType type = 1;
@@ -53,6 +54,7 @@ message MetaInfo {
     ScalarValuesInfo scalar_info = 4;
     TextInfo text_info = 5;
     AlignmentInfo alignment_info = 6;
+    TypedDataInfo typed_data_info = 8;
   }
 
   WaveletBufferInfo wavelet_buffer_info = 7; // info about wavelet transformation and compression if used
@@ -99,4 +101,26 @@ message AlignmentInfo {
     string topic = 1;   // name of source  MQTT topic
     MetaInfo meta = 2;  // meta information
   }
+}
+
+message TypedDataInfo {
+  enum Type {
+    BOOL = 0;
+    INT8 = 1;
+    UINT8 = 2;
+    INT16 = 3;
+    UINT16 = 4;
+    INT32 = 5;
+    UINT32 = 6;
+    INT64 = 7;
+    UINT64 = 8;
+    FLOAT32 = 9;
+    FLOAT64 = 10;
+    STRING = 11;
+  };
+
+  string name = 1; // name of data
+  common.StatusCode status = 2; // status of data
+  Type type = 3; // type of data
+  repeated uint64 shape = 4; // shape of data
 }
