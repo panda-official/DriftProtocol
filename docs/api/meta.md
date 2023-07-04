@@ -13,6 +13,7 @@ The meta information describes the following data types:
 * Scala Values
 * Text
 * Aligned Data
+* Typed Data
 
 ## MetaInfo
 
@@ -27,6 +28,7 @@ Top-level descriptor which has type of data in Drift Package and a type specific
 | scalar_info         | [ScalarValuesInfo](meta.md#scalarvaluesinfo)                             |                                                                                  |
 | text_info           | [TextInfo](meta.md#textinfo)                                             |                                                                                  |
 | alignment_info      | [AlignmentInfo](meta.md#alignmentinfo)                                   |                                                                                  |
+| typed_data_info     | [TypedDataInfo](meta.md#typeddatainfo)                                   |                                                                                  |
 | wavelet_buffer_info | [WaveletBufferInfo](meta.md#waveletbufferinfo)                           | Information about wavelet transformation and compression if used                 |
 
 ## TimeSeriesInfo
@@ -63,6 +65,8 @@ ScalarValuesInfo describes scalar values inside DriftPackage which is sent
 as a [WaveletBuffer](https://github.com/panda-official/WaveletBuffer) without any decomposition.
 This type of data is used when we have some samples as intentioned parameters from a data source.
 
+DEPRECATED: use [TypedDataInfo](meta.md#typeddatainfo) instead.
+
 | Name          | Type                               | Description                                        |
 |---------------|------------------------------------|----------------------------------------------------|
 | variables     | ValueInfo[]                        | Description for each scalar value in WaveletBuffer |
@@ -89,6 +93,38 @@ different MQTT topics.
 | **PackageInfo** |                              |                                                           |
 | topic           | string                       | Name of source topic                                      |
 | meta            | [MetaInfo](meta.md#metainfo) | Meta information for the package                          |
+
+## TypedDataInfo
+
+TypedDataInfo describes how to parse a binary data inside [DataPayload](common.md) when the data has values of different
+types (not only float).
+
+| Name     | Type     | Description                              |
+|----------|----------|------------------------------------------|
+| items    | Item[]   | Description for each item in DataPayload |
+| **Item** |          |                                          |
+| name     | string   | Name of item                             |
+| type     | Type     | Type of item                             |
+| status   | Status   | Status of item                           |
+| shape    | uint64[] | Shape of item                            |
+
+Supported types:
+
+| Name    | ID | Description             |
+|---------|----|-------------------------|
+| BOOL    | 0  | Boolean                 |
+| INT8    | 1  | 8-bit signed integer    |
+| UINT8   | 2  | 8-bit unsigned integer  |
+| INT16   | 3  | 16-bit signed integer   |
+| UINT16  | 4  | 16-bit unsigned integer |
+| INT32   | 5  | 32-bit signed integer   |
+| UINT32  | 6  | 32-bit unsigned integer |
+| INT64   | 7  | 64-bit signed integer   |
+| UINT64  | 8  | 64-bit unsigned integer |
+| FLOAT32 | 9  | 32-bit float            |
+| FLOAT64 | 10 | 64-bit float            |
+| STRING  | 11 | UTF-8 String            |
+
 
 ## WaveletBufferInfo
 
