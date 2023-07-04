@@ -20,7 +20,8 @@ it, so that the PANDA|Drift infrastructure can handle and store them.
 ## DataPayload
 
 DataPayload represents serialized data which a server sends via MQTT. It is usually data denoised and compressed by
-using [WaveletBuffer](https://github.com/panda-official/WaveletBuffer).
+using [WaveletBuffer](https://github.com/panda-official/WaveletBuffer), or it can be serialized data in little-endian format.
+In case if it is the serialized data, the layout of the data is described by [MetaProtocol](meta.md#typeddatainfo))
 
 | Name  | Type   | Description                                                                                                                                                             |
 |-------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
