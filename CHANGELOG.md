@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- TypedDataInfo to send typed data in DataPayload, [PR-18](https://github.com/panda-official/DriftProtocol/pull/18)
+
 ## 0.5.0 - 2023-06-15
 
 ### Added
