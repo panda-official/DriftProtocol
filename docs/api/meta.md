@@ -10,7 +10,7 @@ The meta information describes the following data types:
 
 * Time Series
 * Images
-* Scala Values
+* Scalar Values (deprecated)
 * Text
 * Aligned Data
 * Typed Data
