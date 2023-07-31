@@ -97,16 +97,14 @@ different MQTT topics.
 ## TypedDataInfo
 
 TypedDataInfo describes how to parse a binary data inside [DataPayload](common.md) when the data has values of different
-types (not only float).
+types (not only float). It uses [DriftBytes](https://github.com/panda-official/DriftBytes)  as a serialization format.
 
 | Name     | Type     | Description                              |
 |----------|----------|------------------------------------------|
 | items    | Item[]   | Description for each item in DataPayload |
 | **Item** |          |                                          |
 | name     | string   | Name of item                             |
-| type     | Type     | Type of item                             |
 | status   | Status   | Status of item                           |
-| shape    | uint64[] | Shape of item                            |
 
 Supported types:
 

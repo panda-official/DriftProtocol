@@ -106,25 +106,8 @@ message AlignmentInfo {
 
 message TypedDataInfo {
   message Item {
-    enum Type {
-      BOOL = 0;
-      INT8 = 1;
-      UINT8 = 2;
-      INT16 = 3;
-      UINT16 = 4;
-      INT32 = 5;
-      UINT32 = 6;
-      INT64 = 7;
-      UINT64 = 8;
-      FLOAT32 = 9;
-      FLOAT64 = 10;
-      STRING = 11;
-    };
-
     string name = 1; // name of data
     common.StatusCode status = 2; // status of data
-    Type type = 3; // type of data
-    repeated uint64 shape = 4; // shape of data
   }
 
   repeated Item items = 1;
