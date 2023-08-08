@@ -7,9 +7,6 @@ from drift_bytes import Variant, InputBuffer, OutputBuffer
 from google.protobuf.timestamp_pb2 import Timestamp
 from google.protobuf.any_pb2 import Any
 
-IMG_PATH = Path(__file__).parent / "pandas.jpg"
-
-
 def create_typed_package() -> bytes:
     global original
     pb_time = Timestamp()
@@ -60,22 +57,22 @@ def create_typed_package() -> bytes:
 
 def parse_typed_data(message: bytes) -> None:
     # Parse the package
-    new_pacakge = DriftPackage()
-    new_pacakge.ParseFromString(message)
+    new_package = DriftPackage()
+    new_package.ParseFromString(message)
     print(
-        f"Package ID={new_pacakge.id} type={MetaInfo.DataType.Name(new_pacakge.meta.type)}"
+        f"Package ID={new_package.id} type={MetaInfo.DataType.Name(new_package.meta.type)}"
     )
 
     print("Labels:")
-    for label in new_pacakge.labels:
+    for label in new_package.labels:
         print(f"{label.key}={label.value}")
 
     payload = DataPayload()
-    new_pacakge.data[0].Unpack(payload)
+    new_package.data[0].Unpack(payload)
     buffer = InputBuffer(payload.data)
 
     print("Values:")
-    for i, var in enumerate(new_pacakge.meta.typed_data_info.items):
+    for i, var in enumerate(new_package.meta.typed_data_info.items):
         print(f"{var.name}={buffer.pop().value}, status={var.status}")
 
 
