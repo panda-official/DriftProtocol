@@ -39,5 +39,5 @@ target_link_libraries(payload_with_timeseries_example ${CONAN_LIBS})
 add_executable(payload_with_scalars payload_with_scalars.cc)
 target_link_libraries(payload_with_scalars ${CONAN_LIBS})
 
-add_executable(payload_with_typed_data payload_with_typed_data.cc)
+add_executable(payload_with_typed_data payload_with_typedata.cc)
 target_link_libraries(payload_with_typed_data ${CONAN_LIBS})
