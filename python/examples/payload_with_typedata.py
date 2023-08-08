@@ -7,6 +7,7 @@ from drift_bytes import Variant, InputBuffer, OutputBuffer
 from google.protobuf.timestamp_pb2 import Timestamp
 from google.protobuf.any_pb2 import Any
 
+
 def create_typed_package() -> bytes:
     global original
     pb_time = Timestamp()
