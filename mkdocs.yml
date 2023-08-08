@@ -12,6 +12,7 @@ nav:
       - docs/cpp_examples/payload_with_image_example.md
       - docs/cpp_examples/payload_with_timeseries_example.md
       - docs/cpp_examples/payload_with_scalars_example.md
+      - docs/cpp_examples/payload_with_typed_data_example.md
       - docs/cpp_examples/trigger_message_example.md
 
   - Python Examples:
@@ -19,6 +20,7 @@ nav:
       - docs/py_examples/payload_with_image_example.md
       - docs/py_examples/payload_with_timeseries_example.md
       - docs/py_examples/payload_with_scalars_example.md
+      - docs/py_examples/payload_with_typed_data_example.md
       - docs/py_examples/trigger_message_example.md
 
   - API Reference:
