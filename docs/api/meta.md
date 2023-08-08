@@ -19,17 +19,17 @@ The meta information describes the following data types:
 
 Top-level descriptor which has type of data in Drift Package and a type specific descriptor.
 
-| Name                | Type                                                                     | Description                                                                      |
-|---------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| type                | DataType                                                                 | Enumeration (TIME_SERIES=0, IMAGE=1, SCALAR_VALUES=2, TEXT=3, ALIGNED_PACKAGE=4) |
+| Name                | Type                                                                     | Description                                                                                    |
+|---------------------|--------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| type                | DataType                                                                 | Enumeration (TIME_SERIES=0, IMAGE=1, SCALAR_VALUES=2, TEXT=3, ALIGNED_PACKAGE=4, TYPED_DATA=5) |
 | One of filed below: | [oneof](https://developers.google.com/protocol-buffers/docs/proto#oneof) |
-| timeseries_info     | [TimeSeriesInfo](meta.md#timeseriesinfo)                                 |                                                                                  |
-| image_info          | [ImageInfo](meta.md#imageinfo)                                           |                                                                                  |
-| scalar_info         | [ScalarValuesInfo](meta.md#scalarvaluesinfo)                             |                                                                                  |
-| text_info           | [TextInfo](meta.md#textinfo)                                             |                                                                                  |
-| alignment_info      | [AlignmentInfo](meta.md#alignmentinfo)                                   |                                                                                  |
-| typed_data_info     | [TypedDataInfo](meta.md#typeddatainfo)                                   |                                                                                  |
-| wavelet_buffer_info | [WaveletBufferInfo](meta.md#waveletbufferinfo)                           | Information about wavelet transformation and compression if used                 |
+| timeseries_info     | [TimeSeriesInfo](meta.md#timeseriesinfo)                                 |                                                                                                |
+| image_info          | [ImageInfo](meta.md#imageinfo)                                           |                                                                                                |
+| scalar_info         | [ScalarValuesInfo](meta.md#scalarvaluesinfo)                             |                                                                                                |
+| text_info           | [TextInfo](meta.md#textinfo)                                             |                                                                                                |
+| alignment_info      | [AlignmentInfo](meta.md#alignmentinfo)                                   |                                                                                                |
+| typed_data_info     | [TypedDataInfo](meta.md#typeddatainfo)                                   |                                                                                                |
+| wavelet_buffer_info | [WaveletBufferInfo](meta.md#waveletbufferinfo)                           | Information about wavelet transformation and compression if used                               |
 
 ## TimeSeriesInfo
 
@@ -99,30 +99,12 @@ different MQTT topics.
 TypedDataInfo describes how to parse a binary data inside [DataPayload](common.md) when the data has values of different
 types (not only float). It uses [DriftBytes](https://github.com/panda-official/DriftBytes)  as a serialization format.
 
-| Name     | Type     | Description                              |
-|----------|----------|------------------------------------------|
-| items    | Item[]   | Description for each item in DataPayload |
-| **Item** |          |                                          |
-| name     | string   | Name of item                             |
-| status   | Status   | Status of item                           |
-
-Supported types:
-
-| Name    | ID | Description             |
-|---------|----|-------------------------|
-| BOOL    | 0  | Boolean                 |
-| INT8    | 1  | 8-bit signed integer    |
-| UINT8   | 2  | 8-bit unsigned integer  |
-| INT16   | 3  | 16-bit signed integer   |
-| UINT16  | 4  | 16-bit unsigned integer |
-| INT32   | 5  | 32-bit signed integer   |
-| UINT32  | 6  | 32-bit unsigned integer |
-| INT64   | 7  | 64-bit signed integer   |
-| UINT64  | 8  | 64-bit unsigned integer |
-| FLOAT32 | 9  | 32-bit float            |
-| FLOAT64 | 10 | 64-bit float            |
-| STRING  | 11 | UTF-8 String            |
-
+| Name     | Type   | Description                              |
+|----------|--------|------------------------------------------|
+| items    | Item[] | Description for each item in DataPayload |
+| **Item** |        |                                          |
+| name     | string | Name of item                             |
+| status   | Status | Status of item                           |
 
 ## WaveletBufferInfo
 

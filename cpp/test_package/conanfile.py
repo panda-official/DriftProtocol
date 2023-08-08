@@ -28,4 +28,3 @@ class HelloTestConan(ConanFile):
         if can_run(self):
             cmd = os.path.join(self.cpp.build.bindirs[0], "test_package")
             self.run(cmd, env="conanrun")
-
