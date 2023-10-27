@@ -86,6 +86,18 @@ class ProtoCompiler:
         if subprocess.call(protoc_command, cwd=PROTO_SPEC_FOLDER) != 0:
             sys.exit(-1)
 
+        print(f"Generating Better Proto {output_path}...")
+        protoc_command = [
+            self.protoc,
+            "-I.",
+            f"--python_betterproto_out={self.output_dir}",
+            str(source),
+        ]
+
+        print(protoc_command)
+        if subprocess.call(protoc_command, cwd=PROTO_SPEC_FOLDER) != 0:
+            sys.exit(-1)
+
         return str(output_path)
 
     def _create_package(self, path: Path):

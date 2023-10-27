@@ -47,6 +47,9 @@ def update_package_version(path: Path, version: str, protoc_version: str):
     with open(path / "__init__.py", "w") as f:
         f.write(init_content)
 
+    with open(path.parent / "drift" / "__init__.py", "w") as f:
+        f.write(init_content)
+
 
 def build_version():
     """Build dynamic version and update version in package"""
@@ -144,5 +147,5 @@ setup(
     package_dir={"": "pkg"},
     packages=LazyPackageFinder(finder=partial(find_packages, where="pkg")),
     python_requires=">=3.7",
-    install_requires=[f"protobuf>={PROTOBUF_VERSION}, <=3.20.3"],
+    install_requires=[f"protobuf>={PROTOBUF_VERSION}, <=3.20.3", "betterproto[compiler]>=2.0.0b6"],
 )

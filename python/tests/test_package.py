@@ -4,6 +4,7 @@
 import os
 import pkgutil
 import drift_protocol
+import drift.proto
 
 
 def test_version():
@@ -20,6 +21,14 @@ def test_modules():
     assert modules
 
 
+def test_betterproto_modules():
+    """Test tha package has modules"""
+    package_path = os.path.dirname(drift.proto.__file__)
+    modules = [name for _, name, _ in pkgutil.iter_modules([package_path])]
+
+    assert modules
+
+
 def test_import():
     """Test if no errors during the import"""
     from drift_protocol.common import (
@@ -27,3 +36,12 @@ def test_import():
     )
 
     assert DriftPackage()
+
+
+def test_betterproto_import():
+    """Test if no errors during the import"""
+    from drift.proto.common import (
+        DriftPackage,
+    )
+
+    assert DriftPackage() is not None

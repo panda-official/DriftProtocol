@@ -4,4 +4,5 @@ build/
 dist/
 python/pkg/drift_protocol.egg-info/
 python/pkg/drift_protocol
+python/pkg/drift
 !python/pkg/drift_protocol/__init__.py.in
