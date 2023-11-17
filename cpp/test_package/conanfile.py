@@ -19,12 +19,12 @@ class HelloTestConan(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.configure()
-        cmake.build()
+        cmake.build_from_msg()
 
     def layout(self):
         cmake_layout(self)
 
     def test(self):
         if can_run(self):
-            cmd = os.path.join(self.cpp.build.bindirs[0], "test_package")
+            cmd = os.path.join(self.cpp.build_from_msg.bindirs[0], "test_package")
             self.run(cmd, env="conanrun")
