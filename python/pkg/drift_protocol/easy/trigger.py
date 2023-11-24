@@ -2,7 +2,9 @@
 import time
 from typing import Dict, Optional
 
-from drift_protocol.trigger_service.trigger_message_pb2 import TriggerMessage as ProtoTriggerMessage
+from drift_protocol.trigger_service.trigger_message_pb2 import (
+    TriggerMessage as ProtoTriggerMessage,
+)
 
 
 class TriggerMessage:

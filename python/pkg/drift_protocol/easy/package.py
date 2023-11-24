@@ -1,16 +1,19 @@
 """Drfit Package"""
 import time
-from typing import Optional, Dict
+from typing import Optional, Dict, Tuple
 
 from google.protobuf.any_pb2 import Any
-from drift_protocol.common import DriftPackage as ProtoDriftPackage, StatusCode, DataPayload
-from drift_bytes import Variant, OutputBuffer
+from drift_protocol.common import (
+    DriftPackage as ProtoDriftPackage,
+    StatusCode,
+    DataPayload,
+)
+from drift_bytes import Variant, OutputBuffer, InputBuffer
 
 from drift_protocol.meta import TypedDataInfo, MetaInfo
 
 
 class DriftPackage:
-
     def __init__(self):
         self._proto = ProtoDriftPackage()
 
@@ -30,7 +33,12 @@ class DriftPackage:
         return package
 
     @staticmethod
-    def build_from_msg(message, pkg_id: Optional[int | float] = None, status: StatusCode = StatusCode.GOOD, **kwargs) -> "DriftPackage":
+    def build_from_msg(
+        message,
+        pkg_id: Optional[int | float] = None,
+        status: StatusCode = StatusCode.GOOD,
+        **kwargs
+    ) -> "DriftPackage":
         """
         Build drift package
 
@@ -77,10 +85,16 @@ class DriftPackage:
         return package
 
     @staticmethod
-    def build_from_typed_data(values: Dict[str, Variant.SUPPORTED_TYPES],
-                              statuses: Optional[Dict[str, StatusCode]] = None,
-                              pkg_id: Optional[int | float] = None, status: StatusCode = StatusCode.GOOD, **kwargs) -> "DriftPackage":
-
+    def build_typed_data(
+        values: Dict[str, Variant.SUPPORTED_TYPES],
+        statuses: Optional[Dict[str, int]] = None,
+        pkg_id: Optional[int | float] = None,
+        status: StatusCode = StatusCode.GOOD,
+        **kwargs
+    ) -> "DriftPackage":
+        """
+        Build drift package from typed data
+        """
         statuses = statuses or {}
 
         info = TypedDataInfo()
@@ -92,15 +106,19 @@ class DriftPackage:
 
             item = TypedDataInfo.Item()
             item.name = name
-            item.type = statuses.get(name, StatusCode.GOOD)
+            item.status = statuses.get(name, StatusCode.GOOD)
             info.items.append(item)
 
         data_payload = DataPayload()
         data_payload.data = buffer.bytes()
 
-        package = DriftPackage.build_from_msg(data_payload, pkg_id=pkg_id, status=status, **kwargs)
+        package = DriftPackage.build_from_msg(
+            data_payload, pkg_id=pkg_id, status=status, **kwargs
+        )
         package._proto.meta.type = MetaInfo.TYPED_DATA
         package._proto.meta.typed_data_info.CopyFrom(info)
+
+        return package
 
     @property
     def id(self) -> int:
@@ -129,6 +147,38 @@ class DriftPackage:
         Source timestamp in seconds
         """
         return self._proto.source_timestamp.ToMilliseconds() / 1000
+
+    @property
+    def data_type(self):
+        """
+        Data type
+
+        Returns:
+            Data type or None if there is no meta info
+        """
+        if self._proto.meta:
+            return self._proto.meta.type
+        return None
+
+    def as_typed_data(self) -> Optional[Dict[str, Tuple[Variant.SUPPORTED_TYPES, int]]]:
+        """
+        Get typed data
+
+        Returns:
+            Typed data or None if there is no meta info
+        """
+        if self._proto.meta and self._proto.meta.type == MetaInfo.TYPED_DATA:
+            data = {}
+            payload = DataPayload()
+            self._proto.data[0].Unpack(payload)
+
+            buffer = InputBuffer(payload.data)
+
+            for idx, item in enumerate(self._proto.meta.typed_data_info.items):
+                data[item.name] = (buffer[idx].value, item.status)
+            return data
+
+        return None
 
     def unpack(self, msg):
         """
