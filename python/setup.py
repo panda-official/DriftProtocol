@@ -144,5 +144,5 @@ setup(
     package_dir={"": "pkg"},
     packages=LazyPackageFinder(finder=partial(find_packages, where="pkg")),
     python_requires=">=3.7",
-    install_requires=[f"protobuf>={PROTOBUF_VERSION}, <=3.20.3"],
+    install_requires=[f"protobuf>={PROTOBUF_VERSION}, <=3.20.3", "drift-bytes>=0.3.0"],
 )
